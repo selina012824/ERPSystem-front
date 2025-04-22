@@ -1,0 +1,137 @@
+<div class="dialog-container">
+  <div class="dialog-scrollable">
+    <h2>取引先検索</h2>
+
+    <div class="search-area">
+      <mat-form-field appearance="outline">
+        <mat-label>取引先番号</mat-label>
+        <input matInput [(ngModel)]="partnerID">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>取引先名</mat-label>
+        <input matInput [(ngModel)]="partnerName">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>取引先種別</mat-label>
+        <mat-select [(ngModel)]="partnerType">
+          <mat-option value="">すべて</mat-option>
+          <mat-option value="個人取引先">個人取引先</mat-option>
+          <mat-option value="法人取引先">法人取引先</mat-option>
+          <mat-option value="仕入先">仕入先</mat-option>
+          <mat-option value="その他">その他</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="search-toggle">
+      <button mat-button (click)="toggleAdvanced()" class="button-flat">
+        @if(showAdvanced){ ▲ 詳細検索を隠す }@else { ＋ 詳細検索 }
+      </button>
+      <div style="display: flex; gap: 12px;">
+        <button mat-raised-button class="button-primary flex-button" (click)="searchCustomer()">検索</button>
+        <button mat-raised-button class="button-primary flex-button" style="background-color: #aaacac;" (click)="reset()">リセット</button>
+      </div>
+    </div>
+
+    @if(showAdvanced){
+    <div class="advanced-area">
+      <mat-form-field appearance="outline">
+        <mat-label>略称</mat-label>
+        <input matInput [(ngModel)]="partnerNickName">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>責任者</mat-label>
+        <input matInput [(ngModel)]="inResponse">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>担当者</mat-label>
+        <input matInput [(ngModel)]="contactor">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>電話番号</mat-label>
+        <input matInput [(ngModel)]="phone">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>携帯番号</mat-label>
+        <input matInput [(ngModel)]="cellphone">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>FAX番号</mat-label>
+        <input matInput [(ngModel)]="faxNumber">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>法人番号</mat-label>
+        <input matInput [(ngModel)]="taxNumber">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>所在地</mat-label>
+        <input matInput [(ngModel)]="address">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>納品先住所</mat-label>
+        <input matInput [(ngModel)]="shipAddress">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>請求先住所</mat-label>
+        <input matInput [(ngModel)]="invoiceAddress">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>支払方法</mat-label>
+        <input matInput [(ngModel)]="payment">
+      </mat-form-field>
+    </div>
+    }
+
+    <div class="table-wrapper">
+      <table class="customer-table">
+        <thead>
+          <tr>
+            <th>選択</th>
+            <th>取引先番号</th>
+            <th>取引先種別</th>
+            <th>取引先名</th>
+            <th>略称</th>
+            <th>責任者</th>
+            <th>担当者</th>
+            <th>電話番号</th>
+            <th>携帯番号</th>
+            <th>FAX番号</th>
+            <th>法人番号</th>
+            <th>所在地</th>
+            <th>納品先住所</th>
+            <th>請求先住所</th>
+            <th>支払方法</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(item of partnerData; track $index){
+          <tr>
+            <td><button mat-button color="primary" class="button-outline" (click)="selectCustomer(item.partnerID)">選択</button></td>
+            <td>{{item.partnerID}}</td>
+            <td>{{item.partnerType?.join('・')}}</td>
+            <td>{{item.partnerName}}</td>
+            <td>{{item.partnerNickName}}</td>
+            <td>{{item.inResponse}}</td>
+            <td>{{item.contactor}}</td>
+            <td>{{item.phone}}</td>
+            <td>{{item.cellphone}}</td>
+            <td>{{item.faxNumber}}</td>
+            <td>{{item.taxNumber}}</td>
+            <td>{{item.address}}</td>
+            <td>{{item.shipAddress}}</td>
+            <td>{{item.invoiceAddress}}</td>
+            <td>{{item.payment}}</td>
+          </tr>
+          }
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="dialog-actions">
+    <button mat-button mat-dialog-close class="button-flat" (click)="close()">閉じる</button>
+  </div>
+</div>

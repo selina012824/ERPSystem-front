@@ -1,0 +1,125 @@
+<div class="whole">
+    @for (item of partnerData; track $index) {
+    <div class="content">
+      <div class="quotation-detail-container">
+        <!-- 標題列 -->
+        <div class="header">
+          <mat-icon fontIcon="arrow_back" class="return-icon" (click)="return()"></mat-icon>
+          <h2>取引先の詳細</h2>
+        </div>
+  
+        <!-- 系統資訊 -->
+        <div class="meta-info">
+          <span>作成者: {{ item.createdBy }}</span>
+          <span>作成日: {{ item.createdAt | date: 'yyyy-MM-dd HH:mm:ss' }}</span>
+          <span>更新者: {{ item.updatedBy }}</span>
+          <span>更新日: {{ item.updatedAt | date: 'yyyy-MM-dd HH:mm:ss' }}</span>
+        </div>
+  
+        <!-- 基本情報 -->
+        <section class="section">
+          <h3>基本情報</h3>
+          <div class="info-grid">
+            <div>
+              <label>取引先番号</label>
+              <div>{{ item.partnerID }}</div>
+            </div>
+            <div>
+              <label>取引先名</label>
+              <div>{{ item.partnerName }}</div>
+            </div>
+            <div>
+              <label>略称</label>
+              <div>{{ item.partnerNickName }}</div>
+            </div>
+            <div class="full-width">
+              <label>取引先種別</label>
+              <div>{{ item.partnerType?.join('・') }}</div>
+            </div>
+          </div>
+        </section>
+  
+        <!-- 連絡先情報 -->
+        <section class="section">
+          <h3>連絡先情報</h3>
+          <div class="info-grid">
+            <div>
+              <label>責任者</label>
+              <div>{{ item.inResponse }}</div>
+            </div>
+            <div>
+              <label>担当者</label>
+              <div>{{ item.contactor }}</div>
+            </div>
+            <div>
+              <label>電話番号</label>
+              <div>{{ item.phone }}</div>
+            </div>
+            <div>
+              <label>携帯番号</label>
+              <div>{{ item.cellphone }}</div>
+            </div>
+            <div>
+              <label>FAX番号</label>
+              <div>{{ item.faxNumber }}</div>
+            </div>
+            <div>
+              <label>法人番号</label>
+              <div>{{ item.taxNumber }}</div>
+            </div>
+          </div>
+        </section>
+  
+        <!-- 住所情報 -->
+        <section class="section">
+          <h3>住所情報</h3>
+          <div class="info-grid">
+            <div>
+              <label>所在地</label>
+              <div>{{ item.address }}</div>
+            </div>
+            <div>
+              <label>納品先住所</label>
+              <div>{{ item.shipAddress }}</div>
+            </div>
+            <div>
+              <label>請求先住所</label>
+              <div>{{ item.invoiceAddress }}</div>
+            </div>
+          </div>
+        </section>
+  
+        <!-- 支払情報 -->
+        <section class="section">
+          <h3>支払情報</h3>
+          <div class="info-grid">
+            <div>
+              <label>支払方法</label>
+              <div>{{ item.payment }}</div>
+            </div>
+          </div>
+        </section>
+  
+        <!-- 備考 -->
+        <section class="section">
+            <h3>備考</h3>
+            <textarea class="remark-box" readonly rows="4">{{ item.remark }}</textarea>
+          </section>
+  
+        <!-- 返回按鈕 -->
+        <div class="actions">
+          <button class="button" (click)="return()">戻る</button>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  
+  <!-- 固定按鈕 -->
+  <div class="toBottom" (click)="toButtom()" [ngClass]="{'show': showButton, 'hidden': !showButton}">
+    @if(isAtBottom()){
+    <mat-icon fontIcon="arrow_upward_alt" class="arrow"></mat-icon>
+    } @else {
+    <mat-icon fontIcon="arrow_downward_alt" class="arrow"></mat-icon>
+    }
+  </div>

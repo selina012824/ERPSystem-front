@@ -1,0 +1,67 @@
+<h2 mat-dialog-title class="title">搜尋篩選器
+  <mat-icon aria-hidden="false" fontIcon="close" class="close" (click)="closeDialog()"></mat-icon>
+</h2>
+
+<mat-dialog-content class="dialog-content">
+  <div class="filter-dialog">
+
+
+    <div style="display: flex;">
+      <!-- 報價單日期範圍 -->
+      <div class="form-group">
+        <label for="quotationID">報價單編號</label>
+        <div class="text-inputs">
+          <input type="text" id="quotationID" placeholder="輸入編號" [(ngModel)]="quotationID">
+        </div>
+      </div>
+
+
+
+      <!-- 報價單日期範圍 -->
+      <div class="form-group" style="margin-left: -10px;">
+        <label for="customerID">客戶編號</label>
+        <div class="text-inputs">
+          <input type="text" id="customerID" placeholder="輸入編號" [(ngModel)]="customerID">
+        </div>
+      </div>
+    </div>
+
+    <!-- 報價單來源 -->
+    <div class="form-group">
+      <label for="quotationSource">報價單來源</label>
+      <mat-select [(ngModel)]="quotationType" id="quotationSource" placeholder="選擇來源" class="select"
+        (selectionChange)="onSelectionChange($event)">
+        <mat-option value="">無</mat-option>
+        <mat-option value="1">自社</mat-option>
+        <mat-option value="2">他社</mat-option>
+      </mat-select>
+    </div>
+
+    <!-- 報價單日期範圍 -->
+    <div class="form-group">
+      <label for="quotationDateStart">報價單日期範圍</label>
+      <div class="date-inputs">
+        <input type="date" id="quotationDateStart" [(ngModel)]="quotationStartDate" placeholder="起始日期">
+        <span class="separator">~</span>
+        <input type="date" id="quotationDateEnd" [(ngModel)]="quotationEndDate" placeholder="結束日期">
+      </div>
+    </div>
+
+    <!-- 有效日期範圍 -->
+    <div class="form-group">
+      <label for="validityDateStart">有效日期範圍</label>
+      <div class="date-inputs">
+        <input type="date" id="validityDateStart" [(ngModel)]="validStartDate" placeholder="起始日期">
+        <span class="separator">~</span>
+        <input type="date" id="validityDateEnd" [(ngModel)]="validEndDate" placeholder="結束日期">
+      </div>
+    </div>
+
+
+
+    <!-- 搜尋按鈕 -->
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="search()">搜尋</button>
+    </div>
+  </div>
+</mat-dialog-content>

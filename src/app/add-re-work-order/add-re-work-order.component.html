@@ -1,0 +1,154 @@
+<!--TODO:沒輸入時的提醒標語-->
+
+<div class="whole">
+  <div class="content">
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="arrow_back" class="returnMark"
+      style="margin-top:20px; font-size:30px" (click)="return()"></mat-icon>
+    <h1 class="title">新增再派工單</h1>
+    <div class="formArea" style="  margin-top: 80px;">
+      <div style="padding:60px; ">
+        <div style="display: flex; align-items: center;">
+          <div class="inputArea">
+            <div style="display: flex; align-items: center;">
+              <label class="inputItem">再派工單號</label><span class="must">必須</span><br>
+            </div>
+            <input type="text" class="inputFrame date"  [(ngModel)]="reWorkOrderID">
+          </div>
+          <div class="inputArea" style="margin-left: 100px;">
+            <div style="display: flex; align-items: center;">
+              <label class="inputItem">(再)派工單號</label><span class="must">必須</span><br>
+            </div>
+
+            <select class="select" [(ngModel)]="workOrderID" (change)="change(workOrderID)">
+              <option disabled>派工單號</option>
+              @for(id of allWorkOrderData; track $index){
+              <option value="{{id.workOrderID}}">{{id.workOrderID}}</option>
+              }
+              <option disabled>再派工單號</option>
+              @for(id of allReWorkOrderData; track $index){
+              <option value="{{id.reWorkOrderID}}">{{id.reWorkOrderID}}</option>
+              }
+            </select>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center;margin-top: 60px;">
+          <div class="inputArea">
+            <div style="display: flex; align-items: center;">
+              <label class="inputItem">狀態</label><span class="must">必須</span><br>
+            </div>
+            <select class="select" [(ngModel)]="status">
+              <option value="待處理">待處理</option>
+              <option value="再派工中">再派工中</option>
+              <option value="完成">完成</option>
+              <option value="終止">終止</option>
+            </select>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center;margin-top: 60px;">
+          <div class="inputArea">
+            <div style="display: flex; align-items: center;">
+              <label class="inputItem">預計開工日</label><br>
+            </div>
+            <input type="date" class="inputFrame date" [(ngModel)]="plannedStartDate">
+          </div>
+          <div class="inputArea" style="margin-left: 100px;">
+            <div style="display: flex; align-items: center;">
+              <label class="inputItem">預計完工日</label><br>
+            </div>
+            <input type="date" class="inputFrame date" [(ngModel)]="plannedEndDate">
+          </div>
+        </div>
+        <div style="display: flex; align-items: center;margin-top: 60px;">
+          <div class="inputArea">
+            <div style="display: flex; align-items: center;">
+              <label class="inputItem">實際開工日</label><br>
+            </div>
+            <input type="date" class="inputFrame date"  [(ngModel)]="actualStartDate">
+          </div>
+          <div class="inputArea" style="margin-left: 100px;">
+            <div style="display: flex; align-items: center;">
+              <label class="inputItem">實際完工日</label><br>
+            </div>
+            <input type="date" class="inputFrame date"  [(ngModel)]="actualEndDate">
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="infoArea" style="  margin-top: 60px;">
+      <h1 style="font-size: 25px; margin-left: 30px; padding-top: 30px;">再派工單明細資訊</h1>
+      <h1 style="font-size: 18px; margin-left: 50px; ">共<span style="color: #4981cf;"> {{index}} </span>筆明細</h1>
+
+    </div>
+
+    @for(item of infos; track $index){
+    <div class="infoFrame2" style="margin-top: 30px;width: 90%">
+      <div style="margin:10px 60px; display:flex; align-items: center;">
+        <div class="index"><span class="indexText">{{$index+1}}</span></div>
+        <div class="infoDetailArea">
+          <span class="detailText" style="  font-weight: bold;">明細編號:RW{{$index+1}}</span><br>
+          <span class="detailText">材料編號:{{item.materialID}}</span>
+          <span class="detailText" style="margin-left:50px">加工類型:{{item.processingType}}</span><br>
+          <span class="detailText">厚度:{{item.thickness}}<span style="font-size:13px;color: rgb(98, 98, 98);">
+              (公尺)</span></span>
+          <span class="detailText" style="margin-left:20px">寬度:{{item.width}}<span
+              style="font-size:13px;color: rgb(98, 98, 98);">
+              (公尺)</span></span>
+          <span class="detailText" style="margin-left:20px">長度:{{item.length}}<span
+              style="font-size:13px;color: rgb(98, 98, 98);">
+              (公尺)</span></span>
+          <span class="detailText" style="margin-left:20px">重量:{{item.weight}}<span
+              style="font-size:13px;color: rgb(98, 98, 98);">
+              (公斤)</span></span><br>
+          <span class="detailText">直徑:{{item.diameter}}<span style="font-size:13px;color: rgb(98, 98, 98);">
+              (公尺)</span></span>
+          <span class="detailText" style="margin-left:20px">外徑:{{item.outerDiameter}}<span
+              style="font-size:13px;color: rgb(98, 98, 98);">
+              (公尺)</span></span>
+          <span class="detailText" style="margin-left:20px">內徑:{{item.innerThickness}}<span
+              style="font-size:13px;color: rgb(98, 98, 98);">
+              (公尺)</span></span>
+          <span class="detailText" style="margin-left:20px">代切尺寸:{{item.cuttingSize}}<span
+              style="font-size:13px;color: rgb(98, 98, 98);">
+              (公斤)</span></span><br>
+          <div sytle="display:flex; align-items:center" class="sentence">
+            <span class="detailText">表面處理: {{item.surfaceTreatment}}</span>
+          </div>
+          <div sytle="display:flex; align-items:center" class="sentence">
+            <span class="detailText">規格說明: {{item.specification}}</span>
+          </div>
+
+        </div>
+
+        <div class="infoDetailArea" style="margin-left:130px;padding-top: 100px;">
+          <span class="detailText">數量 <span style="margin-left:50px">{{item.quantity}}</span> </span><br>
+          <span class="detailText">單價 <span style="margin-left:50px">${{item.unitPrice}}</span></span><br>
+          <span class="detailText">小計 <span style="margin-left:50px">${{item.unitPrice * item.quantity}}</span></span>
+        </div>
+        @if($index>-1){
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="delete" class="trashcan"
+          (click)="delete($index)"></mat-icon>
+        }
+      </div>
+    </div>
+    }
+    <div class="buttons">
+      <button class="button" (click)="return()">返回</button>
+      <button class="buttonright" (click)="send()">送出</button>
+    </div>
+  </div>
+
+</div>
+
+
+<!--固定按鈕-->
+
+<div class="toBottom" (click)="toButtom()" [ngClass]="{'show': showButton, 'hidden': !showButton}">
+  @if(isAtBottom()){
+  <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="arrow_upward_alt" class="arrow"></mat-icon>
+  }@else {
+  <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="arrow_downward_alt" class="arrow"></mat-icon>
+  }
+</div>

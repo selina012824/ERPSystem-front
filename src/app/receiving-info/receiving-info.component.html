@@ -1,0 +1,139 @@
+<div class="whole">
+
+
+
+  @for (item of receivingData; track $index) {
+
+  <div class="content">
+    <div class="quotation-detail-container">
+      <div class="header">
+        <mat-icon fontIcon="arrow_back" class="return-icon" (click)="return()"></mat-icon>
+        <h2>入荷伝票の詳細</h2>
+        <mat-icon fontIcon="print" class="print-icon" title="印刷" (click)="print()"></mat-icon>
+      </div>
+
+      <div class="meta-info">
+        <span>作成者: {{item.createdBy}}</span>
+        <span>作成日: {{item.createdAt | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+        <span>更新者: {{item.updatedBy}}</span>
+        <span>更新日: {{item.updatedAt | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+      </div>
+
+      <div class="two-columns">
+        <section class="section">
+          <h3>基本情報</h3>
+          <div class="info-grid">
+            <div><label>入荷伝票番号</label>
+              <div>{{item.receivingID}}</div>
+            </div>
+            <div><label>購買注文書番号</label>
+              <div>{{item.purchaseOrderID}}</div>
+            </div>
+            <div><label>仕入先</label>
+              <div>{{item.supplierID}}</div>
+            </div>
+            <div><label>入荷日</label>
+              <div>{{item.receivingDate}}</div>
+            </div>
+          </div>
+          <div class="info-grid two-columns">
+            <div><label>状態</label>
+              <div>{{item.status}}</div>
+            </div>
+            <div><label>請求書状態</label>
+              <div>{{item.invoiceStatus}}</div>
+            </div>
+            <div></div>
+            <div></div>
+          </div>
+        </section>
+      </div>
+
+      <section class="section">
+        <h3>検査情報</h3>
+        <div class="info-grid">
+          <div><label>検査担当者</label>
+            <div>{{item.inspector}}</div>
+          </div>
+          <div><label>検査結果</label>
+            <div>{{item.inspectionResult}}</div>
+          </div>
+          <div></div>
+          <div></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h3>明細情報</h3>
+        <div style="overflow-x: auto;">
+          <table class="detail-table" style="border-collapse: collapse; width: 100%; min-width: 1400px;">
+            <thead style="background-color: #eaeff7;">
+              <tr>
+                <th>#</th>
+                <th>明細番号</th>
+                <th>材料番号</th>
+                <th>実受入数量</th>
+                <th>合格数量</th>
+                <th>不合格数量</th>
+                <th>入荷位置</th>
+                <th>入荷状態</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (data of item.receivingInfoList; track $index) {
+              <tr>
+                <td>{{$index + 1}}</td>
+                <td>
+                  <div class="cell">{{data.receivingDetailID}}</div>
+                </td>
+                <td>
+                  <div class="cell">{{data.materialID}}</div>
+                </td>
+                <td>
+                  <div class="cell">{{data.quantityReceived}}</div>
+                </td>
+                <td>
+                  <div class="cell">{{data.quantityAccepted}} </div>
+                </td>
+                <td>
+                  <div class="cell">{{data.quantityRejected}} </div>
+                </td>
+                <td>
+                  <div class="cell">{{data.storageLocation}} </div>
+                </td>
+                <td>
+                  <div class="cell">{{data.stockStatus}} </div>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="actions">
+        <button class="button" (click)="return()">戻る</button>
+        <button class="button primary" (click)="finishReceiving(item.receivingID)"
+          [disabled]="item.status!='入荷中'">入荷完了 </button>
+      </div>
+    </div>
+
+
+
+  </div>
+
+
+
+  }
+
+
+
+  <!--固定按鈕-->
+
+  <div class="toBottom" (click)="toButtom()" [ngClass]="{'show': showButton, 'hidden': !showButton}">
+    @if(isAtBottom()){
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="arrow_upward_alt" class="arrow"></mat-icon>
+    }@else {
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="arrow_downward_alt" class="arrow"></mat-icon>
+    }
+  </div>

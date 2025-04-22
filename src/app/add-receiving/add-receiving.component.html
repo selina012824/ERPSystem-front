@@ -1,0 +1,151 @@
+<!--TODO:沒輸入時的提醒標語-->
+
+<div class="whole">
+  <div class="content">
+    <div class="quotation-container">
+      <div style="display:flex; align-items: center;">
+        <mat-icon fontIcon="arrow_back" class="return-icon" (click)="return()"></mat-icon>
+        <h2>入荷伝票の新規作成</h2>
+      </div>
+      <div>
+        <!-- 基本情報 -->
+        <section class="section">
+          <h3>基本情報</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>入荷伝票番号</label>
+              <input type="text" [(ngModel)]="receivingID">
+            </div>
+            <div class="form-group">
+              <label>購買注文書番号</label>
+              <select [(ngModel)]="purchaseOrderID" (change)="change(purchaseOrderID)">
+                <option value="" disabled>選択してください</option>
+                @for(ids of allPOIDs; track $index){
+                <option value="{{ids}}">{{ids}}</option>
+                }
+              </select>
+            </div>
+            <div class="form-group">
+              <label>仕入先</label>
+              <input type="text" [(ngModel)]="supplierID">
+            </div>
+            <div class="form-group">
+              <label>入荷日</label>
+              <input type="date" [(ngModel)]="receivingDate">
+            </div>
+          </div>
+
+
+          <div class="form-grid two-columns">
+            <div class="form-group ">
+              <label>状態</label>
+              <select [(ngModel)]="status">
+                <option value="処理待ち">処理待ち</option>
+                <option value="入荷中">入荷中</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>請求書状態</label>
+              <select [(ngModel)]="invoiceStatus">
+                <option value="未発行">未発行</option>
+                <option value="発行済">発行済</option>
+                <option value="照合済">照合済</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- 検査情報 -->
+        <section class="section">
+          <h3>検査情報</h3>
+          <div class="form-grid two-columns">
+            <div class="form-group">
+              <label> 検査担当者</label>
+              <input type="text" [(ngModel)]="inspector">
+            </div>
+            <div class="form-group">
+              <label> 検査結果</label>
+              <select [(ngModel)]="inspectionResult">
+                <option value="">選択しない</option>
+                <option value="合格">合格</option>
+                <option value="不合格">不合格</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- 明細資訊 -->
+        <section class="section">
+          <div class="detailSe"
+            style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #4981cf;  margin-bottom: 20px;">
+            <h3 style="margin: 1px; padding-bottom: 4px; border-bottom: none">入荷明細</h3>
+          </div>
+
+          <div style="overflow-x: auto;">
+            <table class="detail-table" style="border-collapse: collapse; min-width: 1400px;">
+              <thead style="background-color: #eaeff7;">
+                <tr>
+                  <th>#</th>
+                  <th>明細番号</th>
+                  <th>材料番号</th>
+                  <th>実受入数量</th>
+                  <th>合格数量</th>
+                  <th>不合格数量</th>
+                  <th>入荷位置</th>
+                  <th>入荷状態</th>
+                </tr>
+              </thead>
+              @for (item of infos; track $index) {
+              <tbody>
+                <tr>
+                  <td>{{ $index + 1 }}</td>
+                  <td><input type="text" [(ngModel)]="item.receivingDetailID"></td>
+                  <td><input type="text" [(ngModel)]="item.materialID"></td>
+                  <td><input type="number" [(ngModel)]="item.quantityReceived"
+                      oninput="if(value<0)value=0 ; if(value%1 !== 0)value= Math.round(value)"></td>
+                  <td><input type="number" [(ngModel)]="item.quantityAccepted"
+                      oninput="if(value<0)value=0 ; if(value%1 !== 0)value= Math.round(value)"></td>
+                  <td><input type="number" [(ngModel)]="item.quantityRejected"
+                      oninput="if(value<0)value=0 ; if(value%1 !== 0)value= Math.round(value)"></td>
+                  <td><input type="text" [(ngModel)]="item.storageLocation"></td>
+                  <td>
+                    <select [(ngModel)]="item.stockStatus">
+                      <option value="未入荷">未入荷</option>
+                      <option value="一部入荷">一部入荷</option>
+                      <option value="入荷済み">入荷済み</option>
+                    </select>
+                  </td>
+                </tr>
+              </tbody>
+              }
+            </table>
+          </div>
+        </section>
+
+
+        <hr style="margin: 40px 0; border: none; border-top: 2px dashed #ccc;">
+        <div class="actions">
+          <button type="button" (click)="return()">戻る</button>
+          <button type="submit" (click)="send()">保存する</button>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+</div>
+
+
+<!--固定按鈕-->
+
+<div class="toBottom" (click)="toButtom()" [ngClass]="{'show': showButton, 'hidden': !showButton}">
+  @if(isAtBottom()){
+  <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="arrow_upward_alt" class="arrow"></mat-icon>
+  }@else {
+  <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="arrow_downward_alt" class="arrow"></mat-icon>
+  }
+</div>

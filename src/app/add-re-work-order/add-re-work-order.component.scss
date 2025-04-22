@@ -1,0 +1,316 @@
+.whole {
+  position: absolute;
+  background-color: white;
+  background-size: cover;
+  height: 100%;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.content {
+  margin-left: 300px;
+  padding-bottom:10%;
+}
+
+.returnMark{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding:10px;
+  border-radius: 100%;
+
+  cursor: pointer;
+}
+
+.returnMark:hover{
+  background-color: #d3d6dc;
+}
+
+.title {
+  font-size: 40px;
+}
+
+.subTitle {
+  margin-top: 70px
+}
+
+.formArea {
+
+  width: 90%;
+  border: 1px solid #d3d6dc;
+  border-radius: 30px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+}
+
+.inputItem {
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.must {
+  font-size: 13px;
+  font-weight: bold;
+  margin-left: 20px;
+  color: rgb(208, 23, 23);
+  padding: 1px 8px;
+  border: 2px solid red;
+  border-radius: 10px;
+}
+
+.inputFrame {
+  font-size: 19px;
+  margin-top: 15px;
+  background-color: #ffffff;
+
+  border-radius: 10px;
+  border: 1.5px solid #d3d6dc;
+
+  padding: 8px 15px
+}
+
+.inputFrame:focus {
+  border: 1.5px solid #4981cf;
+  outline: none
+}
+
+.address {
+  width: 700px
+}
+
+.select {
+  font-size: 19px;
+  margin-top: 15px;
+  background-color: #ffffff;
+
+  border-radius: 10px;
+  border: 1.5px solid #d3d6dc;
+  width: 280px;
+  padding: 8px 15px
+}
+
+.select:focus {
+  border: 1.5px solid #4981cf;
+  outline: none
+}
+
+.date {
+  width: 245px;
+}
+
+.datetime{
+  padding: 5px 15px;
+
+}
+
+
+.infoArea {
+  width: 90%;
+  height: 130px;
+  border: 1px none #d3d6dc;
+  border-radius: 30px;
+  background-color: #e8ebf2;
+
+  position: relative;
+}
+
+.infoFrame2 {
+  width: 90%;
+  border: 1px solid #d3d6dc;
+  border-radius: 30px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.index {
+  width: 50px;
+  height: 50px;
+  background-color: #95bbe9;
+  border-radius: 100px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.indexText {
+  color: white;
+  font-size: 30px;
+
+}
+
+.detailText {
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.infoDetailArea {
+  margin-left: 30px;
+  white-space: nowrap;
+}
+
+.sentence {
+  margin-top: 10px
+}
+
+.nunmerInput {
+  width: 60px;
+  font-size: 18px;
+  margin-left: 5px;
+  border-radius: 10px;
+  border: 1px solid #d3d6dc;
+  padding:0px 5px
+}
+
+.long {
+  width: 100px;
+  padding: 3px 5px
+}
+
+.selectInput {
+  width: 170px;
+  font-size: 18px;
+  margin-left: 5px;
+  border-radius: 10px;
+  border: 1px solid #d3d6dc;
+}
+
+.right {
+  text-align: right;
+}
+
+.moneyArea {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.money {
+  font-size: 22px;
+  margin-left: 30px;
+}
+
+.line {
+  width: 120%;
+  margin-top: 8px;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #95bbe9;
+}
+
+.totalAmount {
+  font-size: 22px;
+  margin-left: 30px;
+  font-weight: bold;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin-left: -8%;
+  margin-top: 50px;
+}
+
+.button {
+  font-size: 18px;
+  font-weight: bold;
+  color: rgb(80, 78, 78);
+
+  border-radius: 10px;
+  border: 1px solid #d3d6dc;
+  padding: 8px 50px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.buttonright {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+
+  border-radius: 10px;
+  border: 1px solid #d3d6dc;
+
+  padding: 8px 50px;
+  margin-left: 40px;
+  background-color: #4981cf;
+
+  cursor: pointer;
+
+}
+
+button:hover {
+  opacity: 80%;
+}
+
+.trashcan{
+  font-size: 30px;
+  position: absolute;
+  right:10%;
+  transform: translateY(-90px);
+
+  color: #95bbe9;
+
+  cursor: pointer;
+}
+
+.trashcan:hover{
+  opacity: 80%;
+}
+
+.addBox{
+  font-size:50px;
+  width: 100px;
+  height: 100px;
+
+  position: absolute;
+  right: 3%;
+  transform: translateY(-60px);
+
+  cursor: pointer;
+}
+
+.addBox:hover{
+  opacity: 80%;
+}
+//======================================
+.toBottom {
+  position: fixed;
+  right:0.5%;
+  top: 3%;
+
+  width: 80px;
+  height:80px;
+  border-radius: 100%;
+  cursor: pointer;
+  background-color: #cadaee;
+}
+
+.toBottom:hover{
+  opacity: 90%;
+}
+
+.show {
+  transform: translateX(-40px);
+  opacity: 1;
+  transition: all 0.4s;
+
+}
+
+.hidden {
+  opacity: 0;
+  transition: all 0.4s;
+}
+
+.arrow{
+  font-size: 50px;
+  color: white;
+  width: 80px;
+  height:80px;
+
+  position: absolute;
+  top:17%;
+  right:-15px;
+
+
+}

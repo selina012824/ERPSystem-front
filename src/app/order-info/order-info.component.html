@@ -1,0 +1,185 @@
+<div class="whole">
+  @for (item of orderData; track $index) {
+  <div class="content">
+    <div class="quotation-detail-container">
+      <div class="header">
+        <mat-icon fontIcon="arrow_back" class="return-icon" (click)="return()"></mat-icon>
+        <h2>注文詳細</h2>
+        <mat-icon fontIcon="print" class="print-icon" title="印刷" (click)="print()"></mat-icon>
+      </div>
+
+      <div class="meta-info">
+        <span>作成者: {{item.createBy}}</span>
+        <span>作成日: {{item.createAt | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+        <span>更新者: {{item.updateBy}}</span>
+        <span>更新日: {{item.updateAt | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+      </div>
+
+      <div class="two-columns">
+        <section class="section">
+          <h3>基本情報</h3>
+          <div class="info-grid">
+            <div><label>注文番号</label>
+              <div>{{item.orderID}}</div>
+            </div>
+            <div><label>予測廃材番号</label>
+              <div>{{item.estScrapID}}</div>
+            </div>
+            <div><label>注文日</label>
+              <div>{{item.orderDate}}</div>
+            </div>
+            <div><label>納期</label>
+              <div>{{item.deliveryDate}}</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h3>取引先情報</h3>
+          <div class="info-grid">
+            <div><label>取引先番号</label>
+              <div>{{item.customerID}}</div>
+            </div>
+            <div><label>支払方法</label>
+              <div>{{item.payment}}</div>
+            </div>
+            <div></div>
+            <div></div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h3>金額情報</h3>
+          <div class="amount-summary">
+            <div class="amount-row">
+              <span class="label">合計</span>
+              <span class="value">¥{{item.subtotal}}</span>
+            </div>
+            <div class="amount-row">
+              <span class="label">税額</span>
+              <span class="value">¥{{item.tax}}</span>
+            </div>
+            <div class="separator"></div>
+            <div class="amount-row total">
+              <span class="label">総額</span>
+              <span class="value">¥{{item.totalAmount}}</span>
+            </div>
+          </div>
+        </section>
+      </div>
+
+
+
+      <section class="section">
+        <div class="details-header">
+          <h3>明細情報</h3>
+          <div class="actions-inline">
+            <button class="button" (click)="setPO(item.orderID)" [disabled]="otherDisabledButton">購買注文書作成</button>
+            <button class="button" (click)="setWorkOrder(item.orderID)" [disabled]="otherDisabledButton">作業指示書作成</button>
+          </div>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="detail-table" style="border-collapse: collapse; width: 100%; min-width: 1400px;">
+            <thead style="background-color: #eaeff7;">
+              <tr>
+                <th>#</th>
+                <th></th>
+                <th>明細番号</th>
+                <th>材料番号</th>
+                <th>加工種類</th>
+                <th>厚さ</th>
+                <th>幅</th>
+                <th>長さ</th>
+                <th>重量</th>
+                <th>直径</th>
+                <th>外径</th>
+                <th>内径</th>
+                <th>カットサイズ</th>
+                <th>表面処理</th>
+                <th>仕様</th>
+                <th>数量</th>
+                <th>単価</th>
+                <th>小計</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (data of item.orderInfoList; track $index) {
+              <tr [ngClass]="{ 'selected-row': selectItem[$index] }" (click)="selectInfo($index, data.orderDetailID)">
+                <td>{{$index + 1}}</td>
+                <td><input type="checkbox" [(ngModel)]="selectItem[$index]" /></td>
+                <td>
+                  <div class="cell">{{data.orderDetailID}}</div>
+                </td>
+                <td>
+                  <div class="cell">{{data.materialID}}</div>
+                </td>
+                <td>
+                  <div class="cell">{{data.processingType}}</div>
+                </td>
+                <td>
+                  <div class="cell">{{data.thickness}} m</div>
+                </td>
+                <td>
+                  <div class="cell">{{data.width}} m</div>
+                </td>
+                <td>
+                  <div class="cell">{{data.length}} m</div>
+                </td>
+                <td>
+                  <div class="cell">{{data.weight}} kg</div>
+                </td>
+                <td>
+                  <div class="cell">{{data.diameter}} m</div>
+                </td>
+                <td>
+                  <div class="cell">{{data.outerDiameter}} m</div>
+                </td>
+                <td>
+                  <div class="cell">{{data.innerThickness}} m</div>
+                </td>
+                <td>
+                  <div class="cell">{{data.cuttingSize}} m</div>
+                </td>
+                <td>
+                  <div class="cell">{{data.surfaceTreatment}}</div>
+                </td>
+                <td>
+                  <div class="cell">{{data.specification}}</div>
+                </td>
+                <td>
+                  <div class="cell">{{data.quantity}}</div>
+                </td>
+                <td>
+                  <div class="cell">¥{{data.unitPrice}}</div>
+                </td>
+                <td>
+                  <div class="cell">¥{{data.subtotal}}</div>
+                </td>
+              </tr>
+              }
+
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="actions">
+        <button class="button" (click)="return()">戻る</button>
+        <button class="button primary" [disabled]="otherDisabledButton">出荷単作成</button>
+        <button class="button" (click)="endOrder(item.orderID,item.status)" [disabled]="disabledEndButton">{{item.status=='中止' ? '注文復旧' :
+              '注文中止'}}</button>
+        <button class="button" (click)="finishOrder(item.orderID)" [disabled]="disabledFinishButton">注文完了</button>
+      </div>
+    </div>
+  </div>
+  }
+</div>
+
+<!--固定按鈕-->
+<div class="toBottom" (click)="toButtom()" [ngClass]="{'show': showButton, 'hidden': !showButton}">
+  @if(isAtBottom()){
+  <mat-icon fontIcon="arrow_upward_alt" class="arrow"></mat-icon>
+  }@else {
+  <mat-icon fontIcon="arrow_downward_alt" class="arrow"></mat-icon>
+  }
+</div>

@@ -1,0 +1,82 @@
+<h2 mat-dialog-title class="title">搜尋篩選器
+  <mat-icon aria-hidden="false" fontIcon="close" class="close" (click)="closeDialog()"></mat-icon>
+</h2>
+
+<mat-dialog-content class="dialog-content">
+  <div class="filter-dialog">
+
+    <div style="display: flex;">
+      <!-- 採購單號 -->
+      <div class="form-group">
+        <label for="purchaseOrderID">採購單號</label>
+        <div class="text-inputs">
+          <input type="text" id="purchaseOrderID" placeholder="輸入編號" [(ngModel)]="purchaseOrderID">
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-left: -10px;">
+        <label for="orderID">訂單編號</label>
+        <div class="text-inputs">
+          <input type="text" id="orderID" placeholder="輸入編號" [(ngModel)]="orderID">
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex;">
+      <!-- 供應商 -->
+      <div class="form-group">
+        <label for="supplierID">供應商</label>
+        <div class="text-inputs" style="width:400px ;">
+          <input type="text" id="supplierID" placeholder="輸入名稱" [(ngModel)]="supplierID">
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 狀態 -->
+    <div style="display: flex;">
+      <div class="form-group">
+        <label for="status">狀態</label>
+        <mat-select id="status" placeholder="選擇狀態" class="select" [(ngModel)]="status">
+          <mat-option value="待簽核">待簽核</mat-option>
+          <mat-option value="簽核完成">簽核完成</mat-option>
+        </mat-select>
+      </div>
+
+      <div class="form-group" style="margin-left: 30px;">
+        <label for="admire">是否簽核</label>
+        <mat-select id="admire" placeholder="選擇是否簽核" class="select" [(ngModel)]="isApproved">
+          <mat-option value="N">否</mat-option>
+          <mat-option value="Y">是</mat-option>
+        </mat-select>
+      </div>
+    </div>
+
+    <!-- 篩選器標題 -->
+    <div class="form-group">
+      <label for="quotationDateStart">採購日期範圍</label>
+      <div class="date-inputs">
+        <input type="date" id="quotationDateStart" [(ngModel)]="orderStartDate" placeholder="起始日期">
+        <span class="separator">~</span>
+        <input type="date" id="quotationDateEnd" [(ngModel)]="orderEndDate" placeholder="結束日期">
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label for="validityDateStart">預計交期範圍</label>
+      <div class="date-inputs">
+        <input type="date" id="validityDateStart" [(ngModel)]="deliveryStartDate" placeholder="起始日期">
+        <span class="separator">~</span>
+        <input type="date" id="validityDateEnd" [(ngModel)]="deliveryEndDate" placeholder="結束日期">
+      </div>
+    </div>
+
+
+
+    <!-- 搜尋按鈕 -->
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="search()">搜尋</button>
+    </div>
+  </div>
+</mat-dialog-content>

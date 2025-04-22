@@ -1,0 +1,130 @@
+<div class="whole">
+
+  @if(successMessage){
+  <div class="success-message">
+    {{ successMessage }}
+  </div>
+  }
+  <div class="content">
+    <div class="topSolid1">
+      <h1 class="title">購買注文書一覧</h1>
+    </div>
+
+    <div class="search-container">
+      <div class="search-row">
+        <div class="search-field">
+          <label for="purchaseOrderID">購買注文書番号:</label>
+          <input type="text" id="purchaseOrderID" class="search-input" placeholder="購買注文書番号を入力"
+            [(ngModel)]="purchaseOrderID">
+        </div>
+
+        <div class="search-field">
+          <label for="orderID">注文番号:</label>
+          <input type="text" id="orderID" class="search-input" placeholder="注文番号を入力" [(ngModel)]="orderID">
+        </div>
+
+        <div class="search-field">
+          <label for="supplierID">仕入先:</label>
+          <input type="text" id="supplierID" class="search-input" placeholder="仕入先を入力" [(ngModel)]="supplierID">
+        </div>
+      </div>
+
+      <div class="search-row">
+        <div class="search-field">
+          <label for="orderDateStart">発注日:</label>
+          <input type="date" id="orderDateStart" class="search-input" lang="ja" [(ngModel)]="orderStartDate">
+        </div>
+
+        <span class="date-to">～</span>
+
+        <div class="search-field">
+          <label for="orderDateEnd">&nbsp;</label>
+          <input type="date" id="orderDateEnd" class="search-input" lang="ja" [(ngModel)]="orderEndDate">
+        </div>
+
+        <div class="search-field">
+          <label for="deliveryDateStart">納期:</label>
+          <input type="date" id="deliveryDateStart" class="search-input" lang="ja" [(ngModel)]="deliveryStartDate">
+        </div>
+
+        <span class="date-to">～</span>
+
+        <div class="search-field">
+          <label for="deliveryDateEnd">&nbsp;</label>
+          <input type="date" id="deliveryDateEnd" class="search-input" lang="ja" [(ngModel)]="deliveryEndDate">
+        </div>
+      </div>
+
+      <div class="search-row">
+        <div class="search-field select">
+          <label for="status">状態:</label>
+          <select id="status" class="search-input" [(ngModel)]="status">
+            <option value="">選択してください</option>
+            <option value="承認待ち">承認待ち</option>
+            <option value="承認完了">承認完了</option>
+          </select>
+        </div>
+        <div class="search-field select">
+          <label for="isApproved">承認状況:</label>
+          <select id="isApproved" class="search-input" [(ngModel)]="isApproved">
+            <option value="">選択してください</option>
+            <option value="N">未承認</option>
+            <option value="Y">承認済</option>
+          </select>
+        </div>
+        <button class="search-button clear" (click)="initializeSearchData()">クリア</button>
+        <button class="search-button" (click)="search()">検索</button>
+      </div>
+    </div>
+
+    <div class="topSolid2">
+      <h1 class="subTitle">全 <span style="font-size:30px">{{index}}</span> 件 </h1>
+      <div class="top-actions">
+        <mat-icon fontIcon="restart_alt" title="データリセット" class="reset-icon" (click)="reset()"></mat-icon>
+        <button class="addButton" routerLink="/TransformPage/addPOPage" routerLinkActive="active">
+          + 新規購買注文書
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <table>
+        <thead>
+          <tr class="tableTitleA">
+            <th class="tableTitle" scope="col">購買注文書番号</th>
+            <th class="tableTitle" scope="col">注文番号</th>
+            <th class="tableTitle" scope="col">仕入先</th>
+            <th class="tableTitle" scope="col">発注日</th>
+            <th class="tableTitle" scope="col">納期</th>
+            <th class="tableTitle" scope="col">状態</th>
+            <th class="tableTitle" scope="col">承認状況</th>
+            <th class="tableTitle">編集</th>
+            <th class="tableTitle">クリック</th>
+          </tr>
+        </thead>
+        @for (item of purchaseOrders; track $index) {
+        <tr class="round-row" (click)="toInfo(item.purchaseOrderID)">
+          <td class="tableContent">{{item.purchaseOrderID}}</td>
+          <td class="tableContent">{{item.orderID}}</td>
+          <td class="tableContent">{{item.supplierID}}</td>
+          <td class="tableContent">{{item.orderDate}}</td>
+          <td class="tableContent">{{item.deliveryDate}}</td>
+          <td class="tableContent">{{item.status}}</td>
+          <td class="tableContent">{{item.isApproved==="N"? "未承認":"承認済"}}</td>
+          <td class="tableContent"><mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="edit_square"
+              class="icon" (click)="edit(item.purchaseOrderID,$event)"></mat-icon></td>
+          <td class="tableContent"><button [disabled]="item.isApproved!='Y'" class="setBut"
+              (click)="setReceiving(item.purchaseOrderID,$event)">仕入伝票作成</button>
+        </tr>
+
+        }
+
+      </table>
+      <div class="pagination">
+        <button (click)="onPageChange(pageIndex - 1)" [disabled]="pageIndex === 0">前へ</button>
+        <span>ページ{{pageIndex + 1}}</span>
+        <button (click)="onPageChange(pageIndex + 1)" [disabled]="pageIndex >= totalPages - 1">次へ</button>
+      </div>
+    </div>
+  </div>
+</div>

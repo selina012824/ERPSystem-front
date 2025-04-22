@@ -1,0 +1,20 @@
+<!-- 登入頁面 -->
+<div class="login-container">
+  <div class="login-form-wrapper">
+    <h2 class="title">登入</h2>
+    <div class="login-form">
+      <div class="form-group">
+        <input class="input-field" type="text" maxlength="6" placeholder="使用者名稱">
+      </div>
+
+      <div class="form-group">
+        <input class="input-field" type="password" maxlength="6" placeholder="密碼">
+      </div>
+
+      <div class="form-group">
+        <button class="submit-button" (click)="logIn()">登入</button>
+      </div>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

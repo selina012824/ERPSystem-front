@@ -1,0 +1,119 @@
+.sideNav{
+  position: fixed;
+  background-color: #4981cf;
+  background-size: cover;
+  height: 100vh;
+  width: 100px;;
+  z-index: 50000;
+}
+
+.menuIcon{
+  color:white;
+  font-size: 40px;
+  margin-top:20px;
+  padding:10px;
+  width:40px;
+  height:40px;
+  border-radius: 100%;
+
+  cursor: pointer;
+}
+
+.menuIcon:hover{
+  background-color: #e0e0e04c;
+}
+
+.sideArea {
+  position: fixed;
+
+  background-color: #4981cf;
+  background-size: cover;
+  width: 250px;
+  transform: translateX(-100%);
+  height: 100vh;
+  z-index: 50000;
+  overflow: hidden;
+
+  transition: transform 0.3s ease;
+}
+
+.sideArea-open{
+  transform: translateX(0); /* 從左側滑入 */
+  transition: transform 0.3s ease;
+  width: 250px;
+}
+
+.icon {
+  color: white;
+  height: 100px;
+  width: 200px;
+  padding-left:30px;
+  font-size: 80px;
+  margin-left: 20px;
+}
+
+
+.allModal ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.liText-hide{
+  width:60%;
+  margin-top:30px;
+  margin-left:15px;
+  text-align: center;
+  padding: 15px 2px;
+  font-size: 13px;
+  border-radius: 5px;
+
+  background-color:white;
+
+  color: #4981cf;
+  font-weight: bolder;
+  cursor: pointer;
+}
+
+.liText-hide:hover{
+  background-color: #e0e0e0c5;
+}
+
+.liText {
+  text-align: start;
+  padding: 15px 20px;
+  padding-left: 50px;
+  font-size: 20px;
+  color:#ffffff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+.liText:hover {
+  background-color: #7a9fd4;
+  color: #fff;
+  border-radius: 5px;
+}
+
+
+.sideArea {
+  transition: transform 0.3s ease;
+}
+
+.sideArea.closed {
+  transform: translateX(-250px);
+}
+
+.arrow{
+  margin-right:30px
+}
+
+
+//===================================================
+@media print {
+  /* 隱藏側邊欄 */
+  .sideArea {
+    display: none;
+  }
+}

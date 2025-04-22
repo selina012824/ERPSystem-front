@@ -1,0 +1,124 @@
+<!-- 見積書一覧ページ -->
+<div class="whole">
+
+  @if(statusMessage){
+  <div class="success-message">
+    {{ statusMessage }}
+  </div>
+  }
+
+  <div class="content">
+    <div class="topSolid1">
+      <h1 class="title">見積書一覧</h1>
+    </div>
+
+    <div class="search-container">
+      <div class="search-row">
+        <div class="search-field">
+          <label for="quotationID">見積書番号:</label>
+          <input type="text" id="quotationID" class="search-input" placeholder="見積書番号を入力" [(ngModel)]="quotationID">
+        </div>
+
+        <div class="search-field">
+          <label for="customerID">取引先番号:</label>
+          <input type="text" id="customerID" class="search-input" placeholder="取引先番号を入力" [(ngModel)]="customerID">
+        </div>
+      </div>
+
+      <div class="search-row">
+        <div class="search-field">
+          <label for="quotationDateStart">見積日:</label>
+          <input type="date" id="quotationDateStart" class="search-input" lang="ja" [(ngModel)]="quotationStartDate">
+        </div>
+
+        <span class="date-to">～</span>
+
+        <div class="search-field">
+          <label for="quotationDateEnd">&nbsp;</label>
+          <input type="date" id="quotationDateEnd" class="search-input" lang="ja" [(ngModel)]="quotationEndDate">
+        </div>
+
+        <div class="search-field">
+          <label for="validDateStart">有効期限:</label>
+          <input type="date" id="validDateStart" class="search-input" lang="ja" [(ngModel)]="validStartDate">
+        </div>
+
+        <span class="date-to">～</span>
+
+        <div class="search-field">
+          <label for="validDateEnd">&nbsp;</label>
+          <input type="date" id="validDateEnd" class="search-input" lang="ja" [(ngModel)]="validEndDate">
+        </div>
+      </div>
+
+      <div class="search-row">
+        <div class="search-field select">
+          <label for="quotationType">見積元:</label>
+          <select id="quotationType" class="search-input" [(ngModel)]="quotationType">
+            <option value="">選択してください</option>
+            <option value="1">自社</option>
+            <option value="2">他社</option>
+          </select>
+        </div>
+
+        <button class="search-button clear" (click)="initializeSearchData()">クリア</button>
+        <button class="search-button" (click)="search()">検索</button>
+      </div>
+    </div>
+
+    <div class="topSolid2">
+      <h1 class="subTitle">全 <span style="font-size:30px">{{index}}</span> 件 </h1>
+      <div class="top-actions">
+        <mat-icon fontIcon="restart_alt" title="データリセット" class="reset-icon" (click)="reset()"></mat-icon>
+        <button class="addButton" routerLink="/TransformPage/addQuotationPage" routerLinkActive="active">
+          + 新規見積書
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <table>
+        <thead>
+          <tr class="tableTitleA">
+            <th class="tableTitle" scope="col">見積書番号</th>
+            <th class="tableTitle" scope="col">取引先番号</th>
+            <th class="tableTitle" scope="col">見積日</th>
+            <th class="tableTitle" scope="col">有効期限</th>
+            <th class="tableTitle" scope="col">金額</th>
+            <th class="tableTitle" scope="col">見積元</th>
+            <th class="tableTitle" scope="col">編集</th>
+            <th class="tableTitle" scope="col">コピー</th>
+            <th class="tableTitle" scope="col">クリック</th>
+          </tr>
+        </thead>
+        @for (item of paginatedData; track $index) {
+        <tr class="round-row" (click)="toInfo(item.quotationID)">
+          <td class="tableContent">{{item.quotationID}}</td>
+          <td class="tableContent">{{item.customerID}}</td>
+          <td class="tableContent">{{item.quotationDate}}</td>
+          <td class="tableContent">{{item.validDate}}</td>
+          <td class="tableContent">¥{{item.totalAmount}}</td>
+
+          <td class="tableContent">{{item.quotationType==="1"? "自社":"他社"}}</td>
+          <td class="tableContent"><mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="edit_square"
+              class="icon" (click)="edit(item.quotationID,$event)"
+              [ngClass]="{'icon-disabled': item.ifSetOrder==1}"></mat-icon></td>
+          <td class="tableContent"><mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="content_copy"
+              class="icon" (click)="copy(item.quotationID,$event)"></mat-icon></td>
+          <td class="tableContent"><button (click)="setOrder(item.quotationID,$event)" class="setBut"
+              [disabled]="item.ifSetOrder ==1">注文作成</button></td>
+        </tr>
+
+        }
+
+      </table>
+
+      <div class="pagination">
+        <button (click)="onPageChange(pageIndex - 1)" [disabled]="pageIndex === 0">前へ</button>
+        <span> ページ{{pageIndex + 1}} </span>
+        <button (click)="onPageChange(pageIndex + 1)" [disabled]="pageIndex >= totalPages - 1">次へ</button>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,117 @@
+<div class="whole">
+
+  @if(successMessage){
+  <div class="success-message">
+    {{ successMessage }}
+  </div>
+  }
+  <div class="content">
+    <div class="topSolid1">
+      <h1 class="title">入荷伝票一覧</h1>
+    </div>
+
+    <div class="search-container">
+      <div class="search-row">
+        <div class="search-field">
+          <label for="purchaseOrderID">入荷伝票番号:</label>
+          <input type="text" id="purchaseOrderID" class="search-input" placeholder="入荷伝票を入力"
+            [(ngModel)]="receivingID">
+        </div>
+
+        <div class="search-field">
+          <label for="orderID">購買注文書番号:</label>
+          <input type="text" id="orderID" class="search-input" placeholder="購買注文書番号を入力" [(ngModel)]="purchaseOrderID">
+        </div>
+
+        <div class="search-field">
+          <label for="supplierID">仕入先:</label>
+          <input type="text" id="supplierID" class="search-input" placeholder="仕入先を入力" [(ngModel)]="supplierID">
+        </div>
+      </div>
+
+      <div class="search-row">
+        <div class="search-field">
+          <label for="receivingDateStart">入荷日:</label>
+          <input type="date" id="receivingDateStart" class="search-input" lang="ja" [(ngModel)]="receivingStartDate">
+        </div>
+
+        <span class="date-to">～</span>
+
+        <div class="search-field">
+          <label for="receivingDateEnd">&nbsp;</label>
+          <input type="date" id="receivingDateEnd" class="search-input" lang="ja" [(ngModel)]="receivingEndDate">
+        </div>
+      </div>
+
+      <div class="search-row">
+        <div class="search-field select">
+          <label for="status">状態:</label>
+          <select id="status" class="search-input" [(ngModel)]="status">
+            <option value="">選択してください</option>
+            <option value="処理待ち">処理待ち</option>
+            <option value="入荷中">入荷中</option>
+            <option value="完了">入荷完了</option>
+          </select>
+        </div>
+        <div class="search-field select">
+          <label for="isApproved">検査結果:</label>
+          <select id="isApproved" class="search-input" [(ngModel)]="inspectionResult">
+            <option value="">選択してください</option>
+            <option value="不合格">不合格</option>
+            <option value="合格">合格</option>
+          </select>
+        </div>
+        <button class="search-button clear" (click)="initializeSearchData()">クリア</button>
+        <button class="search-button" (click)="search()">検索</button>
+      </div>
+    </div>
+
+    <div class="topSolid2">
+      <h1 class="subTitle">全 <span style="font-size:30px">{{index}}</span> 件 </h1>
+      <div class="top-actions">
+        <mat-icon fontIcon="restart_alt" title="データリセット" class="reset-icon" (click)="reset()"></mat-icon>
+        <!-- <button class="addButton" routerLink="/TransformPage/addReceivingPage" routerLinkActive="active">
+          + 新規入荷伝票
+        </button> -->
+      </div>
+    </div>
+
+    <div>
+      <table>
+        <thead>
+          <tr class="tableTitleA">
+            <th class="tableTitle" scope="col">入荷伝票番号</th>
+            <th class="tableTitle" scope="col">購買注文書番号</th>
+            <th class="tableTitle" scope="col">仕入先</th>
+            <th class="tableTitle" scope="col">入荷日</th>
+            <th class="tableTitle" scope="col">状態</th>
+            <th class="tableTitle" scope="col">検査結果</th>
+            <th class="tableTitle">編集</th>
+            <th class="tableTitle">クリック</th>
+          </tr>
+        </thead>
+        @for (item of receivings; track $index) {
+        <tr class="round-row" (click)="toInfo(item.receivingID)">
+          <td class="tableContent">{{item.receivingID}}</td>
+          <td class="tableContent">{{item.purchaseOrderID}}</td>
+          <td class="tableContent">{{item.supplierID}}</td>
+          <td class="tableContent">{{item.receivingDate}}</td>
+          <td class="tableContent">{{item.status}}</td>
+          <td class="tableContent">{{item.inspectionResult}}</td>
+
+          <td class="tableContent"><mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="edit_square"
+              class="icon" (click)="edit(item.receivingID,$event,item.status)"></mat-icon></td>
+          <td class="tableContent"><button [disabled]="item.status!='入荷中'" class="setBut">入荷完了</button>
+        </tr>
+
+        }
+
+      </table>
+      <div class="pagination">
+        <button (click)="onPageChange(pageIndex - 1)" [disabled]="pageIndex === 0">前へ</button>
+        <span>ページ{{pageIndex + 1}}</span>
+        <button (click)="onPageChange(pageIndex + 1)" [disabled]="pageIndex >= totalPages - 1">次へ</button>
+      </div>
+    </div>
+  </div>
+</div>

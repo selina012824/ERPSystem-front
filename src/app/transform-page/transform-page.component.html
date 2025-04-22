@@ -1,0 +1,46 @@
+<!--這邊做側邊欄-->
+<div class="sideNav">
+  <div style="display: flex; justify-content: center;">
+    <!--展開紐-->
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="menu" class="menuIcon"
+      (click)="toggleSideArea()"></mat-icon>
+  </div>
+
+  <div class="allModal">
+    <ul>
+      <li class="liText-hide" routerLink="/TransformPage/quotationPage" routerLinkActive="active">見積書</li>
+      <li class="liText-hide" routerLink="/TransformPage/orderPage" routerLinkActive="active">注文</li>
+      <li class="liText-hide" routerLink="/TransformPage/poPage" routerLinkActive="active">購買注文書</li>
+      <li class="liText-hide" routerLink="/TransformPage/receivingPage" routerLinkActive="active">入荷伝票</li>
+      <li class="liText-hide" routerLink="/TransformPage/workOrderPage" routerLinkActive="active">作業指示書</li>
+      <li class="liText-hide" routerLink="/TransformPage/reWorkOrderPage" routerLinkActive="active">再作業指示書</li>
+
+      <hr style="border: none; border-top: 1px solid #ffffff50; margin: 20px 0;">
+      <li class="liText-hide" routerLink="/TransformPage/partnerPage" routerLinkActive="active">取引先</li>
+    </ul>
+  </div>
+
+</div>
+
+
+
+<div class="sideArea" [ngClass]="{'sideArea-open':isSideAreaOpen}">
+  <div>
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="menu" class="menuIcon"
+      (click)="toggleSideArea()" style="margin-left: 20px;"></mat-icon>
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="account_circle" class="icon"></mat-icon>
+  </div>
+  <div class="allModal">
+    <ul>
+      <li class="liText" routerLink="/TransformPage/quotationPage" routerLinkActive="active">見積書</li>
+      <li class="liText" routerLink="/TransformPage/orderPage" routerLinkActive="active">注文</li>
+      <li class="liText" routerLink="/TransformPage/poPage" routerLinkActive="active">購買注文書</li>
+      <li class="liText" routerLink="/TransformPage/receivingPage" routerLinkActive="active">入荷伝票</li>
+      <li class="liText" routerLink="/TransformPage/workOrderPage" routerLinkActive="active">作業指示書</li>
+      <li class="liText" routerLink="/TransformPage/reWorkOrderPage" routerLinkActive="active">再作業指示書</li>
+      <hr style="border: none; border-top: 1px solid #ffffff50; margin: 20px 0;">
+      <li class="liText" routerLink="/TransformPage/partnerPage" routerLinkActive="active">取引先</li>
+    </ul>
+  </div>
+</div>
+<router-outlet></router-outlet>

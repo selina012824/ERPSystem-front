@@ -1,0 +1,137 @@
+<div class="whole">
+  @if(successMessage){
+  <div class="success-message">
+    {{ successMessage }}
+  </div>
+  }
+
+  <div class="content">
+    <div class="topSolid1">
+      <h1 class="title">注文一覧</h1>
+    </div>
+
+    <div class="search-container">
+      <div class="search-row">
+        <div class="search-field">
+          <label for="orderID">注文番号:</label>
+          <input type="text" id="orderID" class="search-input" placeholder="注文番号を入力" [(ngModel)]="orderID">
+        </div>
+
+        <div class="search-field">
+          <label for="customerID">取引先番号:</label>
+          <input type="text" id="customerID" class="search-input" placeholder="取引先番号を入力" [(ngModel)]="customerID">
+        </div>
+
+        <div class="search-field">
+          <label for="estScrapID">予測廃材番号:</label>
+          <input type="text" id="estScrapID" class="search-input" placeholder="予測廃材番号を入力" [(ngModel)]="estScrapID">
+        </div>
+      </div>
+
+      <div class="search-row">
+        <div class="search-field">
+          <label for="orderDateStart">注文日:</label>
+          <input type="date" id="orderDateStart" class="search-input" lang="ja" [(ngModel)]="orderStartDate">
+        </div>
+
+        <span class="date-to">～</span>
+
+        <div class="search-field">
+          <label for="orderDateEnd">&nbsp;</label>
+          <input type="date" id="orderDateEnd" class="search-input" lang="ja" [(ngModel)]="orderEndDate">
+        </div>
+
+        <div class="search-field">
+          <label for="deliveryDateStart">納期:</label>
+          <input type="date" id="deliveryDateStart" class="search-input" lang="ja" [(ngModel)]="deliveryStartDate">
+        </div>
+
+        <span class="date-to">～</span>
+
+        <div class="search-field">
+          <label for="deliveryDateEnd">&nbsp;</label>
+          <input type="date" id="deliveryDateEnd" class="search-input" lang="ja" [(ngModel)]="deliveryEndDate">
+        </div>
+      </div>
+
+      <div class="search-row">
+        <div class="search-field select">
+          <label for="status">状態:</label>
+          <select id="status" class="search-input" [(ngModel)]="status">
+            <option value="">選択してください</option>
+            <option value="処理待ち">処理待ち</option>
+            <option value="調達処理中">調達処理中</option>
+            <option value="作業中">作業中</option>
+            <option value="作業中止">作業中止</option>
+            <option value="作業完了">作業完了</option>
+            <option value="再作業中">再作業中</option>
+            <option value="再作業中止">再作業中止</option>
+            <option value="再作業完了">再作業完了</option>
+            <option value="出荷中">出荷中</option>
+            <option value="中止">中止</option>
+            <option value="完了">完了</option>
+          </select>
+        </div>
+        <button class="search-button clear" (click)="initializeSearchData()">クリア</button>
+        <button class="search-button" (click)="search()">検索</button>
+      </div>
+    </div>
+
+    <div class="topSolid2">
+      <h1 class="subTitle">全 <span style="font-size:30px">{{index}}</span> 件 </h1>
+      <div class="top-actions">
+        <mat-icon fontIcon="restart_alt" title="データリセット" class="reset-icon" (click)="reset()"></mat-icon>
+        <button class="addButton" routerLink="/TransformPage/addOrderPage" routerLinkActive="active">
+          + 新規注文
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <table>
+        <thead>
+          <tr class="tableTitleA">
+            <th class="tableTitle">注文番号</th>
+            <th class="tableTitle">予測廃材番号</th>
+            <th class="tableTitle">取引先番号</th>
+            <th class="tableTitle">注文日</th>
+            <th class="tableTitle">納期</th>
+            <th class="tableTitle">金額</th>
+            <th class="tableTitle">状態</th>
+            <th class="tableTitle">編集</th>
+            <th class="tableTitle">クリック</th>
+            <th class="tableTitle"></th>
+            <th class="tableTitle"></th>
+          </tr>
+        </thead>
+        @for (item of paginatedData; track $index) {
+        <tr class="round-row" (click)="toInfo(item.orderID)">
+          <td class="tableContent" (click)="toInfo(item.orderID)">{{item.orderID}}</td>
+          <td class="tableContent" (click)="toInfo(item.orderID)">{{item.estScrapID}}</td>
+          <td class="tableContent" (click)="toInfo(item.orderID)">{{item.customerID}}</td>
+          <td class="tableContent" (click)="toInfo(item.orderID)">{{item.orderDate}}</td>
+          <td class="tableContent" (click)="toInfo(item.orderID)">{{item.deliveryDate}}</td>
+          <td class="tableContent" (click)="toInfo(item.orderID)">¥{{item.totalAmount}}</td>
+          <td class="tableContent" (click)="toInfo(item.orderID)">{{item.status}}</td>
+          <td class="tableContent"><mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="edit_square"
+              class="icon" (click)="edit(item.orderID,$event)"  [ngClass]="{'icon-disabled': item.status != '処理待ち'}"></mat-icon></td>
+          <td class="tableContent"><button [disabled]="item.status=='中止' || item.status=='完了'"
+              class="setBut">出荷伝票作成</button>
+          </td>
+          <td class="tableContent"><button [disabled]="item.status=='中止' || item.status=='完了'"
+              (click)="finishOrder(item.orderID,$event)" class="setBut">完了</button></td>
+          <td class="tableContent"><button [disabled]="item.status=='完了'"
+              (click)="endOrder(item.orderID,item.status,$event)" class="setBut">{{item.status=='中止' ? '復旧' :
+              '中止'}}</button></td>
+        </tr>
+        }
+      </table>
+
+      <div class="pagination">
+        <button (click)="onPageChange(pageIndex - 1)" [disabled]="pageIndex === 0">前へ</button>
+        <span> ページ{{pageIndex + 1}} </span>
+        <button (click)="onPageChange(pageIndex + 1)" [disabled]="pageIndex >= totalPages - 1">次へ</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,192 @@
+<!--TODO:沒輸入時的提醒標語-->
+
+<div class="whole">
+  @for (item of poData; track $index) {
+  <div class="content">
+    <div class="quotation-container">
+      <div style="display:flex; align-items: center;">
+        <mat-icon fontIcon="arrow_back" class="return-icon" (click)="return()"></mat-icon>
+        <h2>購買注文書の編集</h2>
+      </div>
+      <div>
+        <!-- 基本情報 -->
+        <section class="section">
+          <h3>基本情報</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>購買注文書番号</label>
+              <input type="text" [(ngModel)]="item.purchaseOrderID" readonly>
+            </div>
+            <div class="form-group">
+              <label>注文番号</label>
+              <input type="text" [(ngModel)]="item.orderID" readonly>
+            </div>
+            <div class="form-group">
+              <label>注文日</label>
+              <input type="date" [(ngModel)]="item.orderDate">
+            </div>
+            <div class="form-group">
+              <label>納期</label>
+              <input type="date" [(ngModel)]="item.deliveryDate">
+            </div>
+          </div>
+
+          <div class="form-grid two-columns">
+            <div class="form-group">
+              <label>仕入先</label>
+              <input type="text" [(ngModel)]="item.supplierID">
+            </div>
+            <div class="form-group">
+              <label>状態</label>
+              <select [(ngModel)]="item.status">
+                <option value="承認待ち">承認待ち</option>
+                <option value="承認完了">承認完了</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+
+        <section class="section">
+          <h3>承認情報</h3>
+          <div class="form-grid three-columns">
+            <div class="form-group">
+              <label>承認者</label>
+              <input type="text" [(ngModel)]="item.approvedBy">
+            </div>
+            <div class="form-group">
+              <label>承認日時</label>
+              <input type="datetime-local" [(ngModel)]="item.approvedAt">
+            </div>
+            <div class="form-group">
+              <label>承認状況</label>
+              <select [(ngModel)]="item.isApproved">
+                <option value="N">未承認</option>
+                <option value="Y">承認済</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- 明細資訊 -->
+        <section class="section">
+          <div class="detailSe"
+            style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #4981cf;  margin-bottom: 20px;">
+            <h3 style="margin: 1px; padding-bottom: 4px; border-bottom: none">購買注文明細</h3>
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="add" class="addButton"
+              (click)="add()"></mat-icon>
+          </div>
+
+          <div style="overflow-x: auto;">
+            <table class="detail-table" style="border-collapse: collapse; min-width: 1400px;">
+              <thead style="background-color: #eaeff7;">
+                <tr>
+                  <th>#</th>
+                  <th>明細番号</th>
+                  <th>材料番号</th>
+                  <th>加工種類</th>
+                  <th>厚さ</th>
+                  <th>幅</th>
+                  <th>長さ</th>
+                  <th>重量</th>
+                  <th>直径</th>
+                  <th>外径</th>
+                  <th>内径</th>
+                  <th>カットサイズ</th>
+                  <th>表面処理</th>
+                  <th>仕様</th>
+                  <th>数量</th>
+                  <th>単価</th>
+                  <th>小計</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              @for (item of infos; track $index) {
+              <tbody>
+                <tr>
+                  <td>{{ $index + 1 }}</td>
+                  <td><input type="text" [(ngModel)]="item.poDetailID"></td>
+                  <td><input type="text" [(ngModel)]="item.materialID"></td>
+                  <td>
+                    <select [(ngModel)]="item.processingType" style="width:160px">
+                      <option value=null disabled>加工種類を選択</option>
+                      <option value="ステンレス板材">ステンレス板材</option>
+                      <option value="ステンレス丸棒">ステンレス丸棒</option>
+                      <option value="ステンレスパイプ">ステンレスパイプ</option>
+                      <option value="ステンレス一枚切断">ステンレス一枚切断</option>
+                      <option value="ステンレスアングル">ステンレスアングル</option>
+                      <option value="ステンレスチャンネル">ステンレスチャンネル</option>
+                    </select>
+                  </td>
+                  <td><input type="number" [(ngModel)]="item.thickness"
+                      oninput="if(value < 0) value = 0; if(value % 1 !== 0) value = Math.round(value * 100) / 100;">
+                  </td>
+                  <td><input type="number" [(ngModel)]="item.width"
+                      oninput="if(value < 0) value = 0; if(value % 1 !== 0) value = Math.round(value * 100) / 100;">
+                  </td>
+                  <td><input type="number" [(ngModel)]="item.length"
+                      oninput="if(value < 0) value = 0; if(value % 1 !== 0) value = Math.round(value * 100) / 100;">
+                  </td>
+                  <td><input type="number" [(ngModel)]="item.weight"
+                      oninput="if(value < 0) value = 0; if(value % 1 !== 0) value = Math.round(value * 100) / 100;">
+                  </td>
+                  <td><input type="number" [(ngModel)]="item.diameter"
+                      oninput="if(value < 0) value = 0; if(value % 1 !== 0) value = Math.round(value * 100) / 100;">
+                  </td>
+                  <td><input type="number" [(ngModel)]="item.outerDiameter"
+                      oninput="if(value < 0) value = 0; if(value % 1 !== 0) value = Math.round(value * 100) / 100;">
+                  </td>
+                  <td><input type="number" [(ngModel)]="item.innerThickness"
+                      oninput="if(value < 0) value = 0; if(value % 1 !== 0) value = Math.round(value * 100) / 100;">
+                  </td>
+                  <td><input type="number" [(ngModel)]="item.cuttingSize"
+                      oninput="if(value < 0) value = 0; if(value % 1 !== 0) value = Math.round(value * 100) / 100;">
+                  </td>
+                  <td><input type="text" [(ngModel)]="item.surfaceTreatment" style="width:160px"></td>
+                  <td><input type="text" [(ngModel)]="item.specification" style="width:160px"></td>
+                  <td><input type="number" [(ngModel)]="item.quantity" (ngModelChange)="updateSubtotal(item)"
+                      oninput="if(value<0)value=0 ; if(value%1 !== 0)value= Math.round(value)"></td>
+                  <td><input type="number" [(ngModel)]="item.unitPrice" (ngModelChange)="updateSubtotal(item)"
+                      oninput="if(value < 0) value = 0; if(value % 1 !== 0) value = Math.round(value * 100) / 100;">
+                  </td>
+                  <td><input type="number" [(ngModel)]="item.subtotal" readonly></td>
+                  <td><button type="button" (click)="delete($index)">削除</button></td>
+                </tr>
+              </tbody>
+              }
+            </table>
+          </div>
+        </section>
+
+        <!-- 合計資訊 -->
+        <section class="section">
+          <div class="totals" style="font-size: 18px; font-weight: bold;">
+            <div>合計：{{ subTotal | currency:'JPY' }}</div>
+            <div>稅額：¥<input type="number" [(ngModel)]="item.tax" (ngModelChange)="updateTotalAmount()"
+                oninput="if(value < 0) value = 0; if(value % 1 !== 0) value = Math.round(value * 100) / 100;"></div>
+            <div>総額：{{ totalAmount | currency:'JPY' }}</div>
+          </div>
+        </section>
+        <hr style="margin: 40px 0; border: none; border-top: 2px dashed #ccc;">
+        <div class="actions">
+          <button type="button" (click)="return()">戻る</button>
+          <button type="submit" (click)="send()">保存する</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+
+
+</div>
+
+
+<!--固定按鈕-->
+
+<div class="toBottom" (click)="toButtom()" [ngClass]="{'show': showButton, 'hidden': !showButton}">
+  @if(isAtBottom()){
+  <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="arrow_upward_alt" class="arrow"></mat-icon>
+  }@else {
+  <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="arrow_downward_alt" class="arrow"></mat-icon>
+  }
+</div>

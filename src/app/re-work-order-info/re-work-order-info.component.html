@@ -1,0 +1,158 @@
+<div class="whole">
+
+  @for(item of reWorkOrderData;track $index){
+  <div class="content">
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="arrow_back" class="returnMark"
+      style="margin-top:20px; font-size:30px" (click)="return()"></mat-icon>
+    <h1 class="title">再派工單詳細
+
+    </h1>
+    <div style="display: flex;color:#4981cf ; margin-top: -20px;">
+      <h4 style="margin-right: 30px;">建立人員: {{item.createClerk}}</h4>
+      <h4 style="margin-right: 30px;">建立時間: {{item.createAt}}</h4>
+      <h4 style="margin-right: 30px;">更新人員: {{item.updateClerk}}</h4>
+      <h4>更新時間: {{item.updateAt}}</h4>
+    </div>
+    <div style="display: flex;">
+
+
+      <div class="infoArea" style="width: 90%">
+        <h1>基本資訊</h1>
+        <div class="line"></div>
+
+        <div style="display: flex;">
+
+          <div class="infoItem">
+            <div class="textline">
+              <h3 class="text1">再派工單號</h3>
+              <h3 class="text2">{{item.reWorkOrderID}}</h3>
+            </div>
+            <div class="textline">
+              <h3 class="text1">狀態</h3>
+              <h3 class="text2">{{item.status}}</h3>
+            </div>
+            <div class="textline">
+              <h3 class="text1">預計開工日</h3>
+              <h3 class="text2">{{item.plannedStartDate}}</h3>
+            </div>
+            <div class="textline">
+              <h3 class="text1">實際開工日</h3>
+              <h3 class="text2">{{item.actualStartDate}}</h3>
+            </div>
+
+          </div>
+
+          <div class="infoItem">
+            <div class="textline">
+              <h3 class="text1">(再)派工單號</h3>
+              <h3 class="text2">{{item.workOrderID}}</h3>
+            </div>
+            <div class="textline">
+              <h3 class="text1">&nbsp;</h3>
+              <h3 class="text2"></h3>
+            </div>
+            <div class="textline">
+              <h3 class="text1">預計完工日</h3>
+              <h3 class="text2">{{item.plannedEndDate}}</h3>
+            </div>
+
+            <div class="textline">
+              <h3 class="text1">實際完工日</h3>
+              <h3 class="text2">{{item.actualEndDate}}</h3>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="infoArea" style="width: 90%;margin-top:80px;">
+      <div style="display: flex; align-items: center;">
+        <h1 style="white-space: nowrap;">再派工單明細資訊</h1>
+        <button class="button" style="margin-left: 600px;" [disabled]="otherDisabledButton"
+          [ngClass]="{ 'buttonDisabled': otherDisabledButton}"
+          (click)="setReWorkOrder(item.reWorkOrderID)">成立再派工單</button>
+      </div>
+
+      <span class="mind">*點擊可選取明細</span>
+
+      <div class="line"></div>
+      @for(data of item.reWorkOrderInfo;track $index){
+      <div class="infoFrame2" style="margin-top: 30px;width: 100%"
+        [ngClass]="{'selectedItem': selectItem[$index], 'infoFrame2': !selectItem[$index]}"
+        (click)="selectInfo($index,data.reWorkOrderDetailID)">
+        <div style="margin:10px 60px; display:flex; align-items: center;">
+
+          <input type="checkbox" class="detailCheckbox" id="checkbox1" [(ngModel)]="selectItem[$index]" />
+          <label for="checkbox1" class="circleCheckbox">✔</label>
+
+          <div class="index"><span class="indexText">{{$index+1}}</span></div>
+          <div class="infoDetailArea">
+            <span class="detailText" style="  font-weight: bold;">明細編號:{{data.reWorkOrderDetailID}}</span><br>
+            <span class="detailText">材料編號:{{data.materialID}}</span>
+            <span class="detailText" style="margin-left:50px">加工類型:{{data.processingType}}</span><br>
+            <span class="detailText">厚度:{{data.thickness}}<span style="font-size:13px;color: rgb(98, 98, 98);">
+                (公尺)</span></span>
+            <span class="detailText" style="margin-left:20px">寬度:{{data.width}}<span
+                style="font-size:13px;color: rgb(98, 98, 98);">
+                (公尺)</span></span>
+            <span class="detailText" style="margin-left:20px">長度:{{data.length}}<span
+                style="font-size:13px;color: rgb(98, 98, 98);">
+                (公尺)</span></span>
+            <span class="detailText" style="margin-left:20px">重量:{{data.weight}}<span
+                style="font-size:13px;color: rgb(98, 98, 98);">
+                (公斤)</span></span><br>
+            <span class="detailText">直徑:{{data.diameter}}<span style="font-size:13px;color: rgb(98, 98, 98);">
+                (公尺)</span></span>
+            <span class="detailText" style="margin-left:20px">外徑:{{data.outerDiameter}}<span
+                style="font-size:13px;color: rgb(98, 98, 98);">
+                (公尺)</span></span>
+            <span class="detailText" style="margin-left:20px">內徑:{{data.innerThickness}}<span
+                style="font-size:13px;color: rgb(98, 98, 98);">
+                (公尺)</span></span>
+            <span class="detailText" style="margin-left:20px">代切尺寸:{{data.cuttingSize}}<span
+                style="font-size:13px;color: rgb(98, 98, 98);">
+                (公斤)</span></span><br>
+
+            <span class="detailText">表面處理: {{data.surfaceTreatment}}</span><br>
+            <span class="detailText">規格說明: {{data.specification}}</span>
+
+
+          </div>
+
+          <div class="infoDetailArea" style="margin-left:130px;padding-top: 100px;">
+            <span class="detailText">數量 <span style="margin-left:50px">{{data.quantity}}</span> </span><br>
+            <span class="detailText">單價 <span style="margin-left:50px">${{data.unitPrice}}</span></span><br>
+            <span class="detailText">小計 <span style="margin-left:50px">${{data.subtotal}}</span></span>
+          </div>
+
+        </div>
+
+      </div>
+      }
+
+
+    </div>
+    <div>
+      <div class="buttons">
+        <button class="button" (click)="return()">返回</button>
+        <button class="buttonright" [disabled]="disabledFinishButton"
+          [ngClass]="{ 'blueButtonDisabled': disabledFinishButton}">完成再派工單</button>
+        <button class="buttonright" [disabled]="disabledEndButton"
+          [ngClass]="{ 'blueButtonDisabled': disabledEndButton}" (click)="endReworkOrder(item.reWorkOrderID)">終止再派工單</button>
+      </div>
+    </div>
+  </div>
+  }
+
+</div>
+<!--固定按鈕-->
+
+<div class="toBottom" (click)="toButtom()" [ngClass]="{'show': showButton, 'hidden': !showButton}">
+  @if(isAtBottom()){
+  <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="arrow_upward_alt" class="arrow"></mat-icon>
+  }@else {
+  <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="arrow_downward_alt" class="arrow"></mat-icon>
+  }
+</div>

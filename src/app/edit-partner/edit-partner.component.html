@@ -1,0 +1,136 @@
+<div class="whole">
+    @for (item of partnerData; track $index) {
+    <div class="content">
+        <div class="quotation-container">
+
+            <!-- 返回與標題 -->
+            <div style="display:flex; align-items: center;">
+                <mat-icon fontIcon="arrow_back" class="return-icon" (click)="return()"></mat-icon>
+                <h2>取引先の編集</h2>
+            </div>
+
+            <div>
+                <!-- 基本情報 -->
+                <section class="section">
+                    <h3>基本情報</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>取引先番号</label>
+                            <input type="text" [(ngModel)]="item.partnerID">
+                        </div>
+                        <div class="form-group">
+                            <label>取引先名</label>
+                            <input type="text" [(ngModel)]="item.partnerName">
+                        </div>
+                        <div class="form-group">
+                            <label>略称</label>
+                            <input type="text" [(ngModel)]="item.partnerNickName">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>取引先種別（複数選択可）</label>
+                            <div class="checkbox-inline-below">
+                                <label><input type="checkbox" value="個人取引先" (change)="select($event)"
+                                        [checked]="isChecked('個人取引先')"> 個人取引先</label>
+                                <label><input type="checkbox" value="法人取引先" (change)="select($event)"
+                                        [checked]="isChecked('法人取引先')"> 法人取引先</label>
+                                <label><input type="checkbox" value="仕入先" (change)="select($event)"
+                                        [checked]="isChecked('仕入先')"> 仕入先</label>
+                                <label><input type="checkbox" value="その他" (change)="select($event)"
+                                        [checked]="isChecked('その他')"> その他</label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 連絡先情報 -->
+                <section class="section">
+                    <h3>連絡先情報</h3>
+                    <div class="form-grid ">
+                        <div class="form-group">
+                            <label>責任者</label>
+                            <input type="text" [(ngModel)]="item.inResponse">
+                        </div>
+                        <div class="form-group">
+                            <label>担当者</label>
+                            <input type="text" [(ngModel)]="item.contactor">
+                        </div>
+                        <div class="form-group">
+                            <label>電話番号</label>
+                            <input type="text" [(ngModel)]="item.phone">
+                        </div>
+                        <div class="form-group">
+                            <label>携帯番号</label>
+                            <input type="text" [(ngModel)]="item.cellphone">
+                        </div>
+                        <div class="form-group">
+                            <label>FAX番号</label>
+                            <input type="text" [(ngModel)]="item.faxNumber">
+                        </div>
+                        <div class="form-group">
+                            <label>法人番号</label>
+                            <input type="text" [(ngModel)]="item.taxNumber">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 住所情報 -->
+                <section class="section">
+                    <h3>住所情報</h3>
+                    <div class="form-grid three-columns">
+                        <div class="form-group">
+                            <label>所在地</label>
+                            <input type="text" [(ngModel)]="item.address">
+                        </div>
+                        <div class="form-group">
+                            <label>納品先住所</label>
+                            <input type="text" [(ngModel)]="item.shipAddress">
+                        </div>
+                        <div class="form-group">
+                            <label>請求先住所</label>
+                            <input type="text" [(ngModel)]="item.invoiceAddress">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 支払情報 -->
+                <section class="section">
+                    <h3>支払情報</h3>
+                    <div class="form-grid one-columns">
+                        <div class="form-group">
+                            <label>支払方法</label>
+                            <input type="text" [(ngModel)]="item.payment">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 備考 -->
+                <section class="section">
+                    <h3>備考</h3>
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label>備考</label>
+                            <textarea rows="4" [(ngModel)]="item.remark" placeholder="必要に応じて備考を入力してください"></textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <hr style="margin: 40px 0; border: none; border-top: 2px dashed #ccc;">
+                <div class="actions">
+                    <button type="button" (click)="return()">戻る</button>
+                    <button type="submit" (click)="send()">保存する</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+
+<!--固定按鈕-->
+
+<div class="toBottom" (click)="toButtom()" [ngClass]="{'show': showButton, 'hidden': !showButton}">
+    @if(isAtBottom()){
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="arrow_upward_alt" class="arrow"></mat-icon>
+    }@else {
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="arrow_downward_alt" class="arrow"></mat-icon>
+    }
+</div>

@@ -1,0 +1,110 @@
+<div class="whole">
+
+    @if(successMessage){
+    <div class="success-message">
+        {{ successMessage }}
+    </div>
+    }
+
+    <div class="content">
+        <div class="topSolid1">
+            <h1 class="title">取引先一覧</h1>
+        </div>
+
+        <div class="search-container">
+            <div class="search-row">
+                <div class="search-field">
+                    <label for="partnerID">取引先番号:</label>
+                    <input type="text" id="partnerID" class="search-input" placeholder="取引先番号を入力"
+                        [(ngModel)]="partnerID">
+                </div>
+
+                <div class="search-field">
+                    <label for="partnerType">取引先種別:</label>
+                    <select id="partnerType" class="search-input" [(ngModel)]="partnerType">
+                        <option value="">選択してください</option>
+                        <option value="個人取引先">個人取引先</option>
+                        <option value="法人取引先">法人取引先</option>
+                        <option value="仕入先">仕入先</option>
+                        <option value="その他">その他</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="search-row">
+                <div class="search-field">
+                    <label for="partnerName">取引先名:</label>
+                    <input type="text" id="partnerName" class="search-input" [(ngModel)]="partnerName">
+                </div>
+
+                <div class="search-field">
+                    <label for="contactor">担当者:</label>
+                    <input type="text" id="contactor" class="search-input" [(ngModel)]="contactor">
+                </div>
+
+                <div class="search-field">
+                    <label for="phone">電話番号:</label>
+                    <input type="text" id="phone" class="search-input" [(ngModel)]="phone">
+                </div>
+
+
+                <div class="search-field">
+                    <label for="cellphone">携帯番号:</label>
+                    <input type="text" id="cellphone" class="search-input" [(ngModel)]="cellphone">
+                </div>
+            </div>
+
+            <div class="search-row">
+                <button class="search-button clear" (click)="initializeSearchData()">クリア</button>
+                <button class="search-button" (click)="search()">検索</button>
+            </div>
+        </div>
+
+        <div class="topSolid2">
+            <h1 class="subTitle">全 <span style="font-size:30px">{{index}}</span> 件 </h1>
+            <div class="top-actions">
+                <mat-icon fontIcon="restart_alt" title="データリセット" class="reset-icon" (click)="reset()"></mat-icon>
+                <button class="addButton" routerLink="/TransformPage/addPartnerPage" routerLinkActive="active">
+                    + 新規取引先
+                </button>
+            </div>
+        </div>
+
+        <div>
+            <table>
+                <thead>
+                    <tr class="tableTitleA">
+                        <th class="tableTitle">取引先番号</th>
+                        <th class="tableTitle">取引先種別</th>
+                        <th class="tableTitle">取引先名</th>
+                        <th class="tableTitle">担当者</th>
+                        <th class="tableTitle">電話番号</th>
+                        <th class="tableTitle">携帯番号</th>
+                        <th class="tableTitle">編集</th>
+                    </tr>
+                </thead>
+                @for (item of paginatedData; track $index) {
+                <tr class="round-row" (click)="toInfo(item.partnerID)">
+                    <td class="tableContent">{{item.partnerID}}</td>
+                    <td class="tableContent">{{item.partnerType?.join('・')}}</td>
+                    <td class="tableContent">{{item.partnerName}}</td>
+                    <td class="tableContent">{{item.contactor}}</td>
+                    <td class="tableContent">{{item.phone}}</td>
+                    <td class="tableContent">{{item.cellphone}}</td>
+                    <td class="tableContent"><mat-icon aria-hidden="false" aria-label="Example home icon"
+                            fontIcon="edit_square" class="icon" (click)="edit(item.partnerID,$event)"></mat-icon></td>
+                </tr>
+
+                }
+
+            </table>
+            <!-- 分頁控制 -->
+            <div class="pagination">
+                <button (click)="onPageChange(pageIndex - 1)" [disabled]="pageIndex === 0">前へ</button>
+                <span> ページ{{pageIndex + 1}} </span>
+                <button (click)="onPageChange(pageIndex + 1)" [disabled]="pageIndex >= totalPages - 1">次へ</button>
+            </div>
+
+        </div>
+    </div>
+</div>

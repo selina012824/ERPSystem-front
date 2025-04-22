@@ -1,0 +1,116 @@
+/* 整體對話框的樣式 */
+
+.dialog-content {
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.close {
+  cursor: pointer;
+  font-size: 28px;
+  color: #888;
+  transition: color 0.3s ease;
+  position: absolute;
+  right: 20px;
+  top: 20px
+}
+
+.close:hover {
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.date-inputs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+input[type="text"] {
+  width: 68%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+input[type="date"] {
+  width: 30%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+input[type="date"]:focus {
+  border-color: #4981cf;
+}
+
+.separator {
+  font-size: 18px;
+  color: #333;
+}
+
+
+.select {
+  width:130px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+}
+
+.select:focus {
+  border-color: #4981cf;
+}
+
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+button {
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  background-color: #5191eb;
+  color: white;
+  border: none;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #4981cf;
+}

@@ -1,0 +1,64 @@
+
+<mat-dialog-content class="dialog-content">
+  <div class="filter-dialog">
+    <!-- 篩選器標題 -->
+    <div class="header">
+      <h1 class="title">搜尋篩選器</h1>
+      <mat-icon aria-hidden="false" fontIcon="close" class="close" (click)="closeDialog()"></mat-icon>
+    </div>
+    <div class="form-group">
+      <label for="quotationDateStart">預計開工日範圍</label>
+      <div class="date-inputs">
+        <input type="date" id="quotationDateStart" [(ngModel)]="filter.quotationDateStart" placeholder="起始日期">
+        <span class="separator">~</span>
+        <input type="date" id="quotationDateEnd" [(ngModel)]="filter.quotationDateEnd" placeholder="結束日期">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="quotationDateStart">預計完工日範圍</label>
+      <div class="date-inputs">
+        <input type="date" id="quotationDateStart" [(ngModel)]="filter.quotationDateStart" placeholder="起始日期">
+        <span class="separator">~</span>
+        <input type="date" id="quotationDateEnd" [(ngModel)]="filter.quotationDateEnd" placeholder="結束日期">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="quotationDateStart">實際開工日範圍</label>
+      <div class="date-inputs">
+        <input type="date" id="quotationDateStart" [(ngModel)]="filter.quotationDateStart" placeholder="起始日期">
+        <span class="separator">~</span>
+        <input type="date" id="quotationDateEnd" [(ngModel)]="filter.quotationDateEnd" placeholder="結束日期">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="quotationDateStart">實際完工日範圍</label>
+      <div class="date-inputs">
+        <input type="date" id="quotationDateStart" [(ngModel)]="filter.quotationDateStart" placeholder="起始日期">
+        <span class="separator">~</span>
+        <input type="date" id="quotationDateEnd" [(ngModel)]="filter.quotationDateEnd" placeholder="結束日期">
+      </div>
+    </div>
+
+    <!-- 狀態 -->
+    <div class="form-group">
+      <label for="status">狀態</label>
+      <mat-select  id="status"  class="select" placeholder="選擇狀態" >
+        <mat-option value="draft">待處理</mat-option>
+        <mat-option value="finish">派工中</mat-option>
+        <mat-option value="finish">完成</mat-option>
+        <mat-option value="finish">終止</mat-option>
+      </mat-select>
+    </div>
+
+
+    <!-- 搜尋按鈕 -->
+    <div class="actions" >
+      <button mat-raised-button color="primary" (click)="search()">搜尋</button>
+    </div>
+  </div>
+</mat-dialog-content>
+
+

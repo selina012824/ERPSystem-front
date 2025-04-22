@@ -1,0 +1,310 @@
+.whole {
+  position: absolute;
+  background-color: white;
+  background-size: cover;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.content {
+  margin-left: 300px;
+  padding-bottom: 20px;
+  height: auto
+}
+
+.returnMark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 100%;
+
+  cursor: pointer;
+}
+
+.returnMark:hover {
+  background-color: #d3d6dc;
+}
+
+.title {
+  font-size: 40px;
+  display: flex;
+}
+
+.infoArea {
+  margin-top: 10px;
+  width: 40%;
+  height: 100%;
+}
+
+.line {
+  width: 100%;
+  height: 2px;
+  background-color: black;
+}
+
+.infoItem {
+  width: 100%;
+  max-height: 100%;
+  padding: 20px 20px;
+}
+
+.infoItem2 {
+  width: 100%;
+  max-height: 100%;
+  padding-left: 20px;
+  margin-top: -50px;
+}
+
+.textline {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: -20px;
+
+}
+
+.text1 {
+  font-weight: bolder;
+  flex: 1;
+  /* 讓text1佔據可用空間 */
+
+}
+
+.text2 {
+  font-weight: 350;
+  flex: 1;
+  /* 讓text2也佔據剩餘空間 */
+  text-align: left;
+  /* 保證text2的文字左對齊 */
+}
+
+.moneyArea {
+  background-color: #e8ebf2;
+  margin-top: 20px;
+  border-radius: 10px;
+  width: 91%;
+  padding: 0px 20px;
+  ;
+
+}
+
+
+.infoFrame2 {
+  width: 90%;
+  border: 1px solid #d3d6dc;
+  border-radius: 30px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+
+.selectedItem {
+  width: 90%;
+  border: 1px solid #4981cf;
+  border-radius: 30px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.index {
+  width: 50px;
+  height: 50px;
+  background-color: #95bbe9;
+  border-radius: 100px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.indexText {
+  color: white;
+  font-size: 30px;
+
+}
+
+.detailText {
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.mind {
+  position: absolute;
+  right: 10%;
+  margin-top: 10px;
+}
+
+.infoDetailArea {
+  margin-left: 30px;
+  white-space: nowrap;
+}
+
+.detailCheckbox {
+  width: 20px;
+  height: 20px;
+  margin-right: 20px;
+
+  border-radius: 100%;
+
+  position: absolute;
+  right: 8%;
+  transform: translateY(-50px);
+
+  cursor: pointer;
+}
+
+
+.detailCheckbox {
+  display: none;
+}
+
+
+.circleCheckbox {
+  width: 20px;
+  height: 20px;
+
+  border: 2px solid #4981cf;
+  border-radius: 50%;
+
+  display: flex;
+  background-color: #fff;
+  color: white;
+  align-items: center;
+  justify-content: center;
+
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+
+  position: absolute;
+  right: 9%;
+  transform: translateY(-85px);
+
+  cursor: pointer;
+}
+
+
+.detailCheckbox:checked+.circleCheckbox {
+  background-color: #4981cf;
+
+  border-color: #4981cf;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin-left: -30px;
+  margin-top: 50px;
+
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 50px;
+  margin-right: 65px;
+}
+
+.button {
+  font-size: 18px;
+  font-weight: bold;
+  color: rgb(80, 78, 78);
+
+  border-radius: 10px;
+  border: 1px solid #d3d6dc;
+
+  padding: 8px 50px;
+  width: 180px;
+  height: 42px;
+  margin: 5px;
+
+  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.buttonDisabled {
+  color: #ebebeb;
+}
+
+
+.buttonright {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  border-radius: 10px;
+  border: 1px solid #d3d6dc;
+  padding: 8px 50px;
+  margin-left: 40px;
+  background-color: #4981cf;
+  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.blueButtonDisabled {
+  opacity: 80%;
+  background-color: #8ca8cf;
+
+}
+
+.button:hover {
+  opacity: 80%;
+}
+
+.button.secondary {
+  background-color: #f5f5f5;
+  color: rgb(80, 78, 78);
+  border-color: #d3d6dc;
+}
+
+
+button:hover {
+  opacity: 80%;
+}
+
+
+//======================================
+.toBottom {
+  position: fixed;
+  right: 0.5%;
+  top: 3%;
+
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  cursor: pointer;
+  background-color: #cadaee;
+}
+
+.toBottom:hover {
+  opacity: 90%;
+}
+
+.show {
+  transform: translateX(-40px);
+  opacity: 1;
+  transition: all 0.4s;
+
+}
+
+.hidden {
+  opacity: 0;
+  transition: all 0.4s;
+}
+
+.arrow {
+  font-size: 50px;
+  color: white;
+  width: 80px;
+  height: 80px;
+
+  position: absolute;
+  top: 17%;
+  right: -15px;
+
+
+}

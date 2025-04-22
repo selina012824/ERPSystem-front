@@ -1,0 +1,131 @@
+<div class="whole">
+  @if(statusMessage){
+  <div class="success-message">
+    {{ statusMessage }}
+  </div>
+  }
+
+  <div class="content">
+    <div class="topSolid1">
+      <h1 class="title">作業指示書一覧</h1>
+    </div>
+
+    <div class="search-container">
+      <div class="search-row">
+        <div class="search-field">
+          <label for="workOrderID">作業指示書番号:</label>
+          <input type="text" id="workOrderID" class="search-input" placeholder="作業指示書番号を入力" [(ngModel)]="workOrderID">
+        </div>
+
+        <div class="search-field">
+          <label for="orderID">注文番号:</label>
+          <input type="text" id="orderID" class="search-input" placeholder="注文番号を入力" [(ngModel)]="orderID">
+        </div>
+      </div>
+
+      <div class="search-row">
+        <div class="search-field">
+          <label for="plannedStartDate">予定開始日:</label>
+          <input type="date" id="plannedStartDate" class="search-input" [(ngModel)]="plannedStartDateStart">
+        </div>
+
+        <span class="date-to">～</span>
+
+        <div class="search-field">
+          <label for="plannedEndDate">&nbsp;</label>
+          <input type="date" id="plannedEndDate" class="search-input" [(ngModel)]="plannedStartDateEnd">
+        </div>
+
+        <div class="search-field">
+          <label for="plannedStartDate">予定完了日:</label>
+          <input type="date" id="plannedStartDate" class="search-input" [(ngModel)]="plannedEndDateStart">
+        </div>
+
+        <span class="date-to">～</span>
+
+        <div class="search-field">
+          <label for="plannedEndDate">&nbsp;</label>
+          <input type="date" id="plannedEndDate" class="search-input" [(ngModel)]="plannedEndDateEnd">
+        </div>
+      </div>
+
+      <div class="search-row">
+        <div class="search-field select">
+          <label for="status">状態:</label>
+          <select id="status" class="search-input" [(ngModel)]="status">
+            <option value="">選択してください</option>
+            <option value="処理待ち">処理待ち</option>
+            <option value="作業中">作業中</option>
+            <option value="再作業中">再作業中</option>
+            <option value="	完了"> 完了</option>
+            <option value="中止">中止</option>
+          </select>
+        </div>
+
+        <button class="search-button clear" (click)="initializeSearchData()">クリア</button>
+        <button class="search-button" (click)="search()">検索</button>
+      </div>
+    </div>
+
+    <div class="topSolid2">
+      <h1 class="subTitle">全 <span style="font-size:30px">{{index}}</span> 件 </h1>
+      <div class="top-actions">
+        <mat-icon fontIcon="restart_alt" title="データリセット" class="reset-icon" (click)="reset()"></mat-icon>
+        <button class="addButton" routerLink="/TransformPage/addWorkOrderPage" routerLinkActive="active">
+          + 新規作業指示書
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <table>
+        <thead>
+          <tr class="tableTitleA">
+            <th class="tableTitle">作業指示書番号</th>
+            <th class="tableTitle">注文番号</th>
+            <th class="tableTitle">予定開始日</th>
+            <th class="tableTitle">予定完了日</th>
+            <th class="tableTitle">実際開始日</th>
+            <th class="tableTitle">実際完了日</th>
+            <th class="tableTitle">状態</th>
+            <th class="tableTitle">編集</th>
+            <th class="tableTitle">クリック</th>
+            <th class="tableTitle"></th>
+          </tr>
+        </thead>
+
+        @for(item of workOrders; track $index){
+        <tr class="round-row" (click)="toInfo(item.workOrderID)">
+          <td class="tableContent">{{item.workOrderID}}</td>
+          <td class="tableContent">{{item.orderID}}</td>
+          <td class="tableContent">{{item.plannedStartDate}}</td>
+          <td class="tableContent">{{item.plannedEndDate}}</td>
+          <td class="tableContent">{{item.actualStartDate}}</td>
+          <td class="tableContent">{{item.actualEndDate}}</td>
+          <td class="tableContent">{{item.status}}</td>
+
+          <td class="tableContent">
+            <mat-icon fontIcon="edit_square" class="icon" title="編集"
+              (click)="edit(item.workOrderID, $event)" [ngClass]="{'icon-disabled': item.status == '中止' || item.status == '完了'}"></mat-icon>
+          </td>
+
+          <td class="tableContent">
+            <button [disabled]="item.status=='中止' || item.status =='完了'" class="setBut" (click)="finish(item.workOrderID,$event)">完了</button>
+          </td>
+
+          <td class="tableContent">
+            <button [disabled]="item.status=='完了'" class="setBut" (click)="end(item.workOrderID, item.status,$event)">{{item.status=='中止' ? '復旧' :
+              '中止'}}</button>
+        </tr>
+
+        }
+      </table>
+
+      <div class="pagination">
+        <button (click)="onPageChange(pageIndex - 1)" [disabled]="pageIndex === 0">前へ</button>
+        <span>ページ {{pageIndex + 1}}</span>
+        <button (click)="onPageChange(pageIndex + 1)" [disabled]="pageIndex >= totalPages - 1">次へ</button>
+      </div>
+    </div>
+  </div>
+</div>
