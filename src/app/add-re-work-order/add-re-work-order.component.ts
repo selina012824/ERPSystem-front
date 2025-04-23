@@ -1,10 +1,13 @@
-import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { Component, HostListener, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { DataService } from '../@service/dataService';
 import { cloneDeep } from 'lodash';
 import { FormsModule } from '@angular/forms';
+import { HttpClientService } from '../@http-services/http.services';
+import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -14,11 +17,12 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './add-re-work-order.component.scss'
 })
 export class AddReWorkOrderComponent {
-  constructor(private router: Router, private dataService: DataService) { }
+  constructor(private router: Router, private dataService: DataService, private http: HttpClientService) { }
+  readonly dialog = inject(MatDialog);
 
   reWorkOrderID!: string;
   workOrderID: string = "";
-  status: string = "待處理";
+  status: string = "処理待ち";
   plannedStartDate!: string;
   plannedEndDate!: string;
   actualStartDate!: string;
@@ -32,20 +36,69 @@ export class AddReWorkOrderComponent {
 
   //返回
   return() {
+    this.clearForm();
     this.router.navigateByUrl('/TransformPage/reWorkOrderPage');
   }
 
   //送出
   send() {
     //呼叫確認框
+    const dialogRef = this.dialog.open(AlertDialogComponent, {
+      data: { message: "送信してもよろしいですか？" },
+      width: "400px",
+    })
 
-    this.router.navigateByUrl('/TransformPage/reWorkOrderPage');
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == "sure") {
+        let infoData = [];
+
+        //取得現在時間
+        let datePipe = new DatePipe('en-US');
+        let now = new Date();
+        let formattedDateTime = datePipe.transform(now, 'yyyy-MM-ddTHH:mm:ss')!;
+
+        this.createAt = formattedDateTime;
+        this.createClerk = "員工A"//這邊到時會用註冊名字去寫
+
+        let orderDetailID = [];
+        for (let item of this.infos) {
+          orderDetailID.push(item.orderDetailID);
+        }
+
+        let req = {
+          "reWorkOrderID": this.reWorkOrderID,
+          "workOrderID": this.workOrderID,
+          "orderDetailID": JSON.stringify(orderDetailID),
+          "status": this.status,
+          "plannedStartDate": this.plannedStartDate,
+          "plannedEndDate": this.plannedEndDate,
+          "actualStartDate": this.actualStartDate,
+          "actualEndDate": this.actualEndDate,
+          "createdAt": this.createAt,
+          "createdBy": this.createClerk,
+          "updatedAt": this.createAt,
+          "updatedBy": this.createClerk,
+        }
+        this.http.postApi("http://localhost:8080/reWorkOrder/add_reWorkOrder", req)
+          .subscribe({
+            next: (res) => {
+              this.clearForm();
+              // 將成功訊息存儲到 sessionStorage 中
+              sessionStorage.setItem('successMessage', 'データが正常に送信されました!');
+              this.router.navigateByUrl('/TransformPage/reWorkOrderPage');
+            },
+
+            error: (err) => {
+              console.log(err);
+            }
+          })
+      }
+    })
   }
-
-
   //清理表格
   clearForm() {
-
+    this.dataService.targetWorkOrderID = null;
+    this.dataService.setReWorkOrders = [];
   }
 
 
@@ -54,34 +107,58 @@ export class AddReWorkOrderComponent {
   reWorkOrderData!: Array<any>;
   allWorkOrderData!: Array<any>;
   allReWorkOrderData!: Array<any>;
-  //讀取派工單資料
-  readWorkOrder() {
-    if (this.dataService.targetWorkOrderID) {
-      this.targetID = this.dataService.targetWorkOrderID;
 
-      let data = this.dataService.workOrderData.filter(item =>
-        item.workOrderID == this.targetID)
 
-      if (data.length != 0) {
-        this.workOrderData = cloneDeep(data);
+  //讀取所有派工單編號
+  readWorkOrders() {
+    this.http.getApi("http://localhost:8080/workOrder/get_workOrder_id")
+      .subscribe({
+        next: (res: any) => {
+          this.allWorkOrderData = res;
+        }
+      })
+  }
 
-        let selectInfoData = this.dataService.setReWorkOrders;
-
-        console.log(selectInfoData);
-
-        this.infos = this.workOrderData[0].workOrderInfo.filter((item: any) =>
-          selectInfoData.includes(item.workOrderDetailID)
-        )
-
-        console.log(this.infos);
-        this.index = this.infos.length;
-        this.workOrderID = this.dataService.targetWorkOrderID;
-      }
-
-    }
+  //讀取所有再派工單編號
+  readReWorkOrders() {
+    this.http.getApi("http://localhost:8080/reWorkOrder/get_reWorkOrder_id")
+      .subscribe({
+        next: (res: any) => {
+          this.allReWorkOrderData = res;
+        }
+      })
   }
 
   //讀取派工單資料
+  readWorkOrder() {
+    if (this.dataService.targetWorkOrderID) {
+      this.http.postApi("http://localhost:8080/workOrder/get_workOrder", this.dataService.targetWorkOrderID)
+        .subscribe((res: any) => {
+          console.log(res);
+
+          this.workOrderData = [res.workOrder];
+          this.workOrderID = this.workOrderData[0].workOrderID;
+          let orderID = this.workOrderData[0].orderID;
+          let req = {
+            "orderID": orderID,
+            "orderInfoIDList": this.dataService.setReWorkOrders
+          }
+          console.log(req);
+
+          this.http.postApi("http://localhost:8080/order/get_select_order", req)
+            .subscribe((res: any) => {
+              console.log(res);
+
+              let orderData = [res.order];
+              this.infos = orderData[0].orderInfoList;
+
+              this.index = this.infos.length;
+            })
+        })
+    }
+  }
+
+  //讀取再派工單資料
   readReWorkOrder() {
     if (this.dataService.targetWorkOrderID) {
       this.targetID = this.dataService.targetWorkOrderID;
@@ -110,30 +187,90 @@ export class AddReWorkOrderComponent {
 
   //當選擇派工單編號時
   change(targetID: string) {
-    let data = this.dataService.workOrderData.filter(item =>
-      item.workOrderID == targetID
-    )
-    if (data.length != 0) {
-      this.workOrderData = cloneDeep(data);
-      this.infos = this.workOrderData[0].workOrderInfo;
-      this.index = this.infos.length;
+    if (targetID == "") {
+      let reWorkOrderData1Info = {
+        reWorkOrderDetailID: null,//再派工單明細編號
+        reWorkOrderID: null,//再派工單號
+        materialID: null,//材料編號
+        processingType: null,//加工類型
+
+        quantity: 0,//數量
+        unitPrice: 0.00,//單價
+        subtotal: 0.00,//小計
+
+        thickness: null,//厚度
+        width: null,//寬度
+        length: null,//長度
+        weight: null,//重量
+        diameter: null,//直徑
+        outerDiameter: null,//外徑
+        innerThickness: null,//內徑
+        cuttingSize: null,//待切尺寸
+        surfaceTreatment: null,//表面處理
+        specification: null,//規格說明
+
+        createAt: null,//建立時間
+        createClerk: null,//建立員工名稱
+
+        updateAt: null,//更新時間
+        updateClerk: null,//更新員工名稱
+      }
+      this.infos = [];
+      this.infos.push(reWorkOrderData1Info);
+      return;
     }
 
-    console.log(data);
 
+    this.http.postApi("http://localhost:8080/workOrder/get_workOrder", targetID)
+      .subscribe({
+        next: (res: any) => {
+          this.reWorkOrderData = [res.workOrder];
+          let orderID = this.reWorkOrderData[0].orderID;
+          let orderDetailIDs = this.reWorkOrderData[0].orderDetailID;
+          let req = {
+            "orderID": orderID,
+            "orderInfoIDList": JSON.parse(orderDetailIDs)
+          }
+          console.log(req);
 
-    let data1 = this.dataService.reWorkOrderData.filter(item =>
-      item.reWorkOrderID == targetID
-    )
+          this.http.postApi("http://localhost:8080/order/get_select_order", req)
+            .subscribe((res: any) => {
+              console.log(res);
 
-    console.log(data1);
+              let orderData = [res.order];
+              this.infos = orderData[0].orderInfoList;
 
+              this.index = this.infos.length;
 
-    if (data1.length != 0) {
-      this.reWorkOrderData = cloneDeep(data1);
-      this.infos = this.reWorkOrderData[0].reWorkOrderInfo;
-      this.index = this.infos.length;
-    }
+            })
+        }
+      })
+
+    this.http.postApi("http://localhost:8080/reWorkOrder/get_reWorkOrder", targetID)
+      .subscribe({
+        next: (res: any) => {
+          this.workOrderData = [res.reWorkOrder];
+          let orderID = this.workOrderData[0].orderID;
+          let orderDetailIDs = this.workOrderData[0].orderDetailID;
+          let req = {
+            "orderID": orderID,
+            "orderInfoIDList": JSON.parse(orderDetailIDs)
+          }
+          console.log(req);
+
+          this.http.postApi("http://localhost:8080/order/get_select_order", req)
+            .subscribe((res: any) => {
+              console.log(res);
+
+              let orderData = [res.order];
+              this.infos = orderData[0].orderInfoList;
+
+              this.index = this.infos.length;
+
+            })
+        }
+      })
+
 
   }
 
@@ -176,6 +313,10 @@ export class AddReWorkOrderComponent {
     this.infos.push(reWorkOrderData1Info);
     this.index = this.infos.length;
 
+
+
+    this.readWorkOrders();
+    this.readReWorkOrders();
     this.readWorkOrder();
     this.readReWorkOrder();
     this.dataService.targetWorkOrderID = null;
@@ -184,9 +325,14 @@ export class AddReWorkOrderComponent {
     this.allReWorkOrderData = this.dataService.reWorkOrderData;
   }
 
+
   delete(index: number) {
     this.infos.splice(index, 1);
     this.index = this.infos.length;
+  }
+
+  updateSubtotal(item: any) {
+    item.subtotal = item.unitPrice * item.quantity;
   }
 
 

@@ -15,11 +15,11 @@
           <div class="form-grid three-columns">
             <div class="form-group">
               <label>作業指示書番号</label>
-              <input type="text" [(ngModel)]="item.workOrderID" readonly>
+              <input type="text" [(ngModel)]="item.workOrderID" disabled>
             </div>
             <div class="form-group">
               <label>注文番号</label>
-              <input [(ngModel)]="item.orderID" readonly>
+              <input [(ngModel)]="item.orderID" disabled>
             </div>
             <div class="form-group">
               <label>状態</label>
@@ -87,10 +87,10 @@
               <tbody>
                 <tr>
                   <td>{{ $index + 1 }}</td>
-                  <td><input type="text" [(ngModel)]="item.orderDetailID" readonly></td>
-                  <td><input type="text" [(ngModel)]="item.materialID" readonly></td>
+                  <td><input type="text" [(ngModel)]="item.orderDetailID" disabled></td>
+                  <td><input type="text" [(ngModel)]="item.materialID" disabled></td>
                   <td>
-                    <select [(ngModel)]="item.processingType" style="width:160px" readonly>
+                    <select [(ngModel)]="item.processingType" style="width:160px" disabled>
                       <option value=null disabled>加工種類を選択</option>
                       <option value="ステンレス板材">ステンレス板材</option>
                       <option value="ステンレス丸棒">ステンレス丸棒</option>
@@ -100,29 +100,29 @@
                       <option value="ステンレスチャンネル">ステンレスチャンネル</option>
                     </select>
                   </td>
-                  <td><input type="number" [(ngModel)]="item.thickness" readonly>
+                  <td><input type="number" [(ngModel)]="item.thickness" disabled>
                   </td>
-                  <td><input type="number" [(ngModel)]="item.width" readonly>
+                  <td><input type="number" [(ngModel)]="item.width" disabled>
                   </td>
-                  <td><input type="number" [(ngModel)]="item.length" readonly>
+                  <td><input type="number" [(ngModel)]="item.length" disabled>
                   </td>
-                  <td><input type="number" [(ngModel)]="item.weight" readonly>
+                  <td><input type="number" [(ngModel)]="item.weight" disabled>
                   </td>
-                  <td><input type="number" [(ngModel)]="item.diameter" readonly>
+                  <td><input type="number" [(ngModel)]="item.diameter" disabled>
                   </td>
-                  <td><input type="number" [(ngModel)]="item.outerDiameter" readonly>
+                  <td><input type="number" [(ngModel)]="item.outerDiameter" disabled>
                   </td>
-                  <td><input type="number" [(ngModel)]="item.innerThickness" readonly>
+                  <td><input type="number" [(ngModel)]="item.innerThickness" disabled>
                   </td>
-                  <td><input type="number" [(ngModel)]="item.cuttingSize" readonly>
+                  <td><input type="number" [(ngModel)]="item.cuttingSize" disabled>
                   </td>
-                  <td><input type="text" [(ngModel)]="item.surfaceTreatment" style="width:160px" readonly></td>
-                  <td><input type="text" [(ngModel)]="item.specification" style="width:160px" readonly></td>
-                  <td><input type="number" [(ngModel)]="item.quantity" readonly>
+                  <td><input type="text" [(ngModel)]="item.surfaceTreatment" style="width:160px" disabled></td>
+                  <td><input type="text" [(ngModel)]="item.specification" style="width:160px" disabled></td>
+                  <td><input type="number" [(ngModel)]="item.quantity" disabled>
                   </td>
-                  <td><input type="number" [(ngModel)]="item.unitPrice" readonly>
+                  <td><input type="number" [(ngModel)]="item.unitPrice" disabled>
                   </td>
-                  <td><input type="number" [(ngModel)]="item.subtotal" readonly></td>
+                  <td><input type="number" [(ngModel)]="item.subtotal" disabled></td>
                 </tr>
               </tbody>
               }

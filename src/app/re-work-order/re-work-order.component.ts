@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DataService } from '../@service/dataService';
 import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
 import { FormsModule } from '@angular/forms';
+import { HttpClientService } from '../@http-services/http.services';
 @Component({
   selector: 'app-re-work-order',
   imports: [MatIconModule, RouterLink, RouterLinkActive, MatButtonModule, MatMenuModule, FormsModule],
@@ -14,7 +15,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './re-work-order.component.scss'
 })
 export class ReWorkOrderComponent {
-  constructor(private router: Router, private dataService: DataService) { }
+  constructor(private router: Router, private dataService: DataService, private http: HttpClientService) { }
 
   readonly dialog = inject(MatDialog);
 
@@ -49,21 +50,30 @@ export class ReWorkOrderComponent {
       this.statusMessage = '';
     }, 3000);
 
-    for (let item of this.dataService.reWorkOrderData) {
+    this.http.getApi("http://localhost:8080/reWorkOrder/get_all_reWorkOrder").subscribe({
+      next: (res: any) => {
+        console.log(res);
 
-      let data = {
-        reWorkOrderID: item.reWorkOrderID,
-        workOrderID: item.workOrderID,
-        status: item.status,
-        plannedStartDate: item.plannedStartDate,
-        plannedEndDate: item.plannedEndDate,
-        actualStartDate: item.actualStartDate,
-        actualEndDate: item.actualEndDate
+        this.reWorkOrders = [];
+        for (let item of res.reWorkOrder) {
+          let data = {
+            reWorkOrderID: item.reWorkOrderID,
+            workOrderID: item.workOrderID,
+            status: item.status,
+            plannedStartDate: item.plannedStartDate,
+            plannedEndDate: item.plannedEndDate,
+            actualStartDate: item.actualStartDate,
+            actualEndDate: item.actualEndDate,
+          }
+
+          this.reWorkOrders.push(data);
+        }
+
+        this.index = this.reWorkOrders.length;
+        this.totalPages = Math.ceil(this.index / this.pageSize);
+        this.updatePaginatedData();
       }
-      this.reWorkOrders.push(data);
-    }
-    this.index = this.reWorkOrders.length;
-    this.updatePaginatedData();
+    })
   }
 
   toInfo(targetID: string) {
@@ -84,34 +94,126 @@ export class ReWorkOrderComponent {
   plannedStartDateEnd!: string;
   plannedEndDateEnd!: string;
   search() {
+    let req = {        
+      "reWorkOrderID": this.reWorkOrderID,
+      "workOrderID": this.workOrderID,
+      "status": this.status,
+      "plannedStartDateStart": this.plannedStartDateStart,
+      "plannedStartDateEnd": this.plannedStartDateEnd,
+      "plannedEndDateStart": this.plannedEndDateStart,
+      "plannedEndDateEnd": this.plannedEndDateEnd,
+    }
 
-  }
+    this.http.postApi("http://localhost:8080/reWorkOrder/multi_search", req).subscribe({
 
-  initializeSearchData() {
+      next: (res: any) => {
+        console.log(res);
 
-  }
+        this.reWorkOrders = [];
+        for (let item of res.reWorkOrder) {
+          let data = {
+            reWorkOrderID: item.reWorkOrderID,
+            workOrderID: item.workOrderID,
+            status: item.status,
+            plannedStartDate: item.plannedStartDate,
+            plannedEndDate: item.plannedEndDate,
+            actualStartDate: item.actualStartDate,
+            actualEndDate: item.actualEndDate,
+          }
 
-  reset() {
+          this.reWorkOrders.push(data);
+        }
 
-  }
-
-  end(targetID: string, targetStatus: string, event: Event) {
-    const dialogRef = this.dialog.open(AlertDialogComponent, {
-      data: { message: "確認終止此再派工單嗎?" },
-      height: "35%",
-      width: "25%",
-    })
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result == "sure") {
-
-
+        this.index = this.reWorkOrders.length;
+        this.totalPages = Math.ceil(this.index / this.pageSize); // 計算總頁數
+        this.updatePaginatedData();
       }
     })
   }
 
-  finish(targetID: string, event: Event) {
+  initializeSearchData() {
+    this.reWorkOrderID = "";
+    this.workOrderID = "";
+    this.status = "";
+    this.plannedStartDateStart = "";
+    this.plannedStartDateEnd = "";
+    this.plannedStartDateEnd = "";
+    this.plannedEndDateEnd = "";
+  }
 
+  reset() {
+    this.http.getApi("http://localhost:8080/reWorkOrder/get_all_reWorkOrder").subscribe({
+      next: (res: any) => {
+        console.log(res);
+
+        this.reWorkOrders = [];
+        for (let item of res.reWorkOrder) {
+          let data = {
+            reWorkOrderID: item.reWorkOrderID,
+            workOrderID: item.workOrderID,
+            status: item.status,
+            plannedStartDate: item.plannedStartDate,
+            plannedEndDate: item.plannedEndDate,
+            actualStartDate: item.actualStartDate,
+            actualEndDate: item.actualEndDate,
+          }
+
+          this.reWorkOrders.push(data);
+        }
+
+        this.index = this.reWorkOrders.length;
+        this.totalPages = Math.ceil(this.index / this.pageSize);
+        this.updatePaginatedData();
+      }
+    })
+  }
+
+  end(targetID: string, targetStatus: string, event: Event) {
+    this.stopEvent(event);
+    if (targetStatus != "中止") {
+      const dialogRef = this.dialog.open(AlertDialogComponent, {
+        data: { message: "この作業を中止しますか？" },
+        width: "400px",
+      })
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result == "sure") {
+          this.http.postApi("http://localhost:8080/reWorkOrder/end_reWorkOrder", targetID).subscribe({
+            next: (res: any) => {
+              window.location.reload();
+            }
+          })
+        }
+      })
+    } else {
+      const dialogRef = this.dialog.open(AlertDialogComponent, {
+        data: { message: "この作業を復旧しますか？" },
+        width: "400px",
+      })
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result == "sure") {
+
+        }
+      })
+    }
+  }
+
+  finish(targetID: string, event: Event) {
+    this.stopEvent(event);
+    const dialogRef = this.dialog.open(AlertDialogComponent, {
+      data: { message: "作業を完了すると、以後は操作できなくなります。完了してもよろしいですか？" },
+      width: "400px",
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == "sure") {
+        this.http.postApi("http://localhost:8080/reWorkOrder/finish_reWorkOrder", targetID).subscribe({
+          next: (res: any) => {
+            window.location.reload();
+          }
+        })
+      }
+    })
   }
 
 

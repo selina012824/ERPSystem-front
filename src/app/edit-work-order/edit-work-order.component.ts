@@ -58,18 +58,12 @@ export class EditWorkOrderComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == "sure") {
-        let infoData = [];
 
         //取得現在時間
         let datePipe = new DatePipe('en-US');
         let now = new Date();
         let formattedDateTime = datePipe.transform(now, 'yyyy-MM-ddTHH:mm:ss')!;
 
-
-        let orderDetailID = [];
-        for (let item of this.infos) {
-          orderDetailID.push(item.orderDetailID);
-        }
 
         for (let item of this.workOrderData) {
           item.updatedBy = "員工C";

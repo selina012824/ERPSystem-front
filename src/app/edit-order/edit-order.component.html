@@ -15,11 +15,11 @@
           <div class="form-grid">
             <div class="form-group">
               <label>注文番号</label>
-              <input type="text" [(ngModel)]="item.orderID" readonly>
+              <input type="text" [(ngModel)]="item.orderID" disabled>
             </div>
             <div class="form-group">
               <label>予測廃材番号</label>
-              <input type="text" [(ngModel)]="item.estScrapID" readonly>
+              <input type="text" [(ngModel)]="item.estScrapID" disabled>
             </div>
             <div class="form-group">
               <label>注文日</label>
@@ -39,7 +39,7 @@
             <div class="form-group">
               <label>取引先番号</label>
               <input type="text" [(ngModel)]="item.customerID"><mat-icon fontIcon="search" class="searchBut" title="検索"
-                (click)="selectCustomer()"></mat-icon>
+                (click)="selectCustomer()" disabled></mat-icon>
             </div>
             <div class="form-group">
               <label>支払条件</label>
@@ -85,7 +85,7 @@
               <tbody>
                 <tr>
                   <td>{{ $index + 1 }}</td>
-                  <td><input type="text" [(ngModel)]="item.orderDetailID"></td>
+                  <td><input type="text" [(ngModel)]="item.orderDetailID" disabled></td>
                   <td><input type="text" [(ngModel)]="item.materialID"></td>
                   <td>
                     <select [(ngModel)]="item.processingType" style="width:160px">

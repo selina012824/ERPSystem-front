@@ -13,7 +13,7 @@
           <div class="form-grid">
             <div class="form-group">
               <label>見積番号</label>
-              <input type="text" [(ngModel)]="item.quotationID" readonly>
+              <input type="text" [(ngModel)]="item.quotationID" disabled>
             </div>
             <div class="form-group">
               <label>見積元</label>
@@ -39,19 +39,19 @@
           <div class="form-grid">
             <div class="form-group">
               <label>取引先番号</label>
-              <input type="text" [(ngModel)]="item.customerID" readonly>
+              <input type="text" [(ngModel)]="item.customerID" disabled>
             </div>
             <div class="form-group">
               <label>取引先名</label>
-              <input type="text" [(ngModel)]="item.customerName">
+              <input type="text" [(ngModel)]="item.customerName" disabled>
             </div>
             <div class="form-group">
               <label>略称</label>
-              <input type="text" [(ngModel)]="item.customerNickName">
+              <input type="text" [(ngModel)]="item.customerNickName" disabled>
             </div>
             <div class="form-group">
               <label>責任者</label>
-              <input type="text" [(ngModel)]="item.personInResponse">
+              <input type="text" [(ngModel)]="item.personInResponse" >
             </div>
             <div class="form-group">
               <label>担当者</label>
@@ -59,7 +59,7 @@
             </div>
             <div class="form-group">
               <label>電話番号</label>
-              <input type="text" [(ngModel)]="item.customerPhone">
+              <input type="text" [(ngModel)]="item.customerPhone" disabled>
             </div>
             <div class="form-group">
               <label>携帯番号</label>
@@ -71,11 +71,11 @@
             </div>
             <div class="form-group">
               <label>法人番号</label>
-              <input type="text" [(ngModel)]="item.customertaxNumber">
+              <input type="text" [(ngModel)]="item.customertaxNumber" disabled>
             </div>
             <div class="form-group">
               <label>所在地</label>
-              <input type="text" [(ngModel)]="item.customerAddress">
+              <input type="text" [(ngModel)]="item.customerAddress" disabled>
             </div>
             <div class="form-group">
               <label>納品先住所</label>

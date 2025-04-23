@@ -106,7 +106,7 @@
 
           <td class="tableContent">
             <mat-icon fontIcon="edit_square" class="icon" title="編集"
-              (click)="edit(item.workOrderID, $event)" [ngClass]="{'icon-disabled': item.status == '中止' || item.status == '完了'}"></mat-icon>
+              (click)="edit(item.workOrderID, $event)" [ngClass]="{'icon-disabled': item.status == '中止' || item.status == '完了'}" [ngClass]="{'icon-disabled': item.status != '処理待ち'}"></mat-icon>
           </td>
 
           <td class="tableContent">

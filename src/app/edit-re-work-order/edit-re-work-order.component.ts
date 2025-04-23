@@ -1,10 +1,13 @@
-import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { Component, HostListener, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { DataService } from '../@service/dataService';
 import { cloneDeep } from 'lodash';
 import { FormsModule } from '@angular/forms';
+import { HttpClientService } from '../@http-services/http.services';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
 
 @Component({
   selector: 'app-edit-re-work-order',
@@ -13,26 +16,52 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './edit-re-work-order.component.scss'
 })
 export class EditReWorkOrderComponent {
-  constructor(private router: Router, private dataService: DataService) { }
-
+  constructor(private router: Router, private dataService: DataService, private http: HttpClientService) { }
+  readonly dialog = inject(MatDialog);
 
   targetID!: string;
   reWorkOrderData!: Array<any>;
   allWorkOrderData!: Array<any>;
   allReWorkOrderData!: Array<any>;
+  orderID!: string;
+  orderDetailID!: Array<string>;
   ngOnInit(): void {
 
     this.targetID = this.dataService.editID;
+    this.http.postApi("http://localhost:8080/reWorkOrder/get_reWorkOrder", this.targetID)
+      .subscribe({
 
-    let data = this.dataService.reWorkOrderData.filter(item =>
-      item.reWorkOrderID == this.targetID)
+        next: (res: any) => {
+          this.reWorkOrderData = [res.reWorkOrder];
 
-    this.reWorkOrderData = cloneDeep(data);
+          this.orderID = this.reWorkOrderData[0].orderID;
+          this.orderDetailID = JSON.parse(this.reWorkOrderData[0].orderDetailID);
+          console.log(this.orderID);
 
-    this.infos = this.reWorkOrderData[0].reWorkOrderInfo
-    this.index = this.infos.length;
-    this.allWorkOrderData = this.dataService.workOrderData;
-    this.allReWorkOrderData = this.dataService.reWorkOrderData;
+          this.readOrder();
+        },
+      })
+  }
+
+
+  orderData!: Array<any>;
+  //讀取訂單明細資料
+  readOrder() {
+
+    if (this.orderID) {
+      let req = {
+        "orderID": this.orderID,
+        "orderInfoIDList": this.orderDetailID
+      }
+      this.http.postApi("http://localhost:8080/order/get_select_order", req)
+        .subscribe((res: any) => {
+          console.log(res);
+
+          this.orderData = [res.order];
+          this.infos = this.orderData[0].orderInfoList;
+        })
+
+    }
   }
 
   //返回
@@ -43,18 +72,42 @@ export class EditReWorkOrderComponent {
   //送出
   send() {
     //呼叫確認框
+    const dialogRef = this.dialog.open(AlertDialogComponent, {
+      data: { message: "送信してもよろしいですか？" },
+      width: "400px",
+    })
 
-    this.router.navigateByUrl('/TransformPage/reWorkOrderPage');
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == "sure") {
+
+        //取得現在時間
+        let datePipe = new DatePipe('en-US');
+        let now = new Date();
+        let formattedDateTime = datePipe.transform(now, 'yyyy-MM-ddTHH:mm:ss')!;
+
+
+        for (let item of this.reWorkOrderData) {
+          item.updatedBy = "員工C";
+          item.updatedAt = formattedDateTime;
+        }
+
+        let req = this.reWorkOrderData[0];
+
+        this.http.postApi("http://localhost:8080/reWorkOrder/edit_reWorkOrder", req)
+          .subscribe({
+            next: (res) => {
+              // 將成功訊息存儲到 sessionStorage 中
+              sessionStorage.setItem('successMessage', 'データが正常に送信されました!');
+              this.router.navigateByUrl('/TransformPage/reWorkOrderPage');
+            },
+
+            error: (err) => {
+              console.log(err);
+            }
+          })
+      }
+    })
   }
-
-
-
-
-  //清理表格
-  clearForm() {
-
-  }
-
 
   //明細========================================
 
