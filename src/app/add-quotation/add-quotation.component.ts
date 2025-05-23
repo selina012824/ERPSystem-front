@@ -22,7 +22,7 @@ export class AddQuotationComponent {
   constructor(private router: Router, private http: HttpClientService, private dataService: DataService) { }
   readonly dialog = inject(MatDialog);
 
-  quotationID!: string; // 見積書番号
+  quotationID: string | null = null; // 見積書番号
   quotationDate!: string; // 見積日
   quotationType: string = "1"; // 見積元（1=自社、2=他社）
 
@@ -121,6 +121,7 @@ export class AddQuotationComponent {
       console.log(result);
 
       if (result) {
+        this.notFound = false;
         this.http.postApi("http://localhost:8080/partner/get_partner", result)
           .subscribe((res: any) => {
             console.log(res);
@@ -143,6 +144,9 @@ export class AddQuotationComponent {
     })
   }
 
+  isSubmitted = false;
+  formatError = false;
+  notFound = false;
   // 見積書登録処理（確認 → API 呼出し）
   send() {
 
@@ -231,8 +235,26 @@ export class AddQuotationComponent {
               this.router.navigateByUrl('/TransformPage/quotationPage');
             },
 
-            error: (err) => {
+            error: (err:any) => {
               console.log(err);
+              this.isSubmitted = true;
+
+              if (this.quotationID && !/^[A-Za-z0-9]+$/.test(this.quotationID)) {
+                this.isSubmitted = true;
+                this.formatError = true;
+              }
+
+              for(let item of err.error){
+                if(item.message == "指定された取引先が見つかりません。"){
+                 this.isSubmitted = true;
+                 this.notFound = true;
+                }
+                if(item.message == "指定され見積番号が無効です。"){
+                  this.formatError = true;
+                }
+             }
+
+              
             }
 
           })

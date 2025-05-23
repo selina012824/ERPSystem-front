@@ -9,11 +9,17 @@
       <div>
         <!-- 基本情報 -->
         <section class="section">
+          <div class="error-message" *ngIf="isSubmitted">※ すべての必須項目を入力してください。</div>
           <h3>基本情報</h3>
-          <div class="form-grid">
-            <div class="form-group">
+          <div class="form-grid input-wrapper">
+            <div class="form-group input-with-error"
+              [ngClass]="{'has-error': (isSubmitted && !quotationID) || (formatError && !quotationID?.match('^[A-Za-z0-9]+$'))}">
               <label>見積番号</label>
               <input type="text" [(ngModel)]="quotationID">
+              <div class="error-inside"
+                *ngIf="isSubmitted && (formatError &&quotationID&& !quotationID?.match('^[A-Za-z0-9]+$'))">
+                ※ 英数字のみ入力してください。
+              </div>
             </div>
             <div class="form-group">
               <label>見積元</label>
@@ -22,11 +28,11 @@
                 <option value="2">他社</option>
               </select>
             </div>
-            <div class="form-group">
+            <div class="form-group" [ngClass]="{'has-error': isSubmitted && !quotationDate}">
               <label>見積日</label>
               <input type="date" [(ngModel)]="quotationDate" (change)="updateValidDate()">
             </div>
-            <div class="form-group">
+            <div class="form-group" [ngClass]="{'has-error': isSubmitted && !validDate}">
               <label>有効期限</label>
               <input type="date" [(ngModel)]="validDate">
             </div>
@@ -37,56 +43,61 @@
         <section class="section">
           <h3>取引先情報</h3>
           <div class="form-grid">
-            <div class="form-group">
+            <div class="form-group icon-wrapper" [ngClass]="{'has-error': isSubmitted && !customerID || notFound}">
               <label>取引先番号</label>
-              <input type="text" [(ngModel)]="customerID"><mat-icon fontIcon="search" class="searchBut" title="検索"
-                (click)="selectCustomer()"></mat-icon>
+              <div class="input-with-icon">
+                <input type="text" [(ngModel)]="customerID" />
+                <mat-icon fontIcon="search" class="search-icon" title="検索" (click)="selectCustomer()"></mat-icon>
+                <div class="error-inside short" *ngIf="isSubmitted && (notFound) && customerID">
+                  ※この取引先が見つかりません。
+                </div>
+              </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" [ngClass]="{'has-error': isSubmitted && !customerName}">
               <label>取引先名</label>
-              <input type="text" [(ngModel)]="customerName">
+              <input type="text" [(ngModel)]="customerName" disabled>
             </div>
-            <div class="form-group">
+            <div class="form-group" [ngClass]="{'has-error': isSubmitted && !customerNickname}">
               <label>略称</label>
               <input type="text" [(ngModel)]="customerNickname">
             </div>
-            <div class="form-group">
+            <div class="form-group" [ngClass]="{'has-error': isSubmitted && !inResponse}">
               <label>責任者</label>
               <input type="text" [(ngModel)]="inResponse">
             </div>
-            <div class="form-group">
+            <div class="form-group" [ngClass]="{'has-error': isSubmitted && !contactor}">
               <label>担当者</label>
               <input type="text" [(ngModel)]="contactor">
             </div>
-            <div class="form-group">
+            <div class="form-group" [ngClass]="{'has-error': isSubmitted && !phone}">
               <label>電話番号</label>
-              <input type="text" [(ngModel)]="phone">
+              <input type="text" [(ngModel)]="phone" disabled>
             </div>
-            <div class="form-group">
+            <div class="form-group" [ngClass]="{'has-error': isSubmitted && !cellPhone}">
               <label>携帯番号</label>
               <input type="text" [(ngModel)]="cellPhone">
             </div>
-            <div class="form-group">
+            <div class="form-group" >
               <label>FAX番号</label>
-              <input type="text" [(ngModel)]="faxNumber">
+              <input type="text" [(ngModel)]="faxNumber" disabled>
             </div>
-            <div class="form-group">
+            <div class="form-group" >
               <label>法人番号</label>
-              <input type="text" [(ngModel)]="taxNumber">
+              <input type="text" [(ngModel)]="taxNumber" disabled>
             </div>
-            <div class="form-group">
+            <div class="form-group" [ngClass]="{'has-error': isSubmitted && !address}">
               <label>所在地</label>
-              <input type="text" [(ngModel)]="address">
+              <input type="text" [(ngModel)]="address" disabled>
             </div>
-            <div class="form-group">
+            <div class="form-group" [ngClass]="{'has-error': isSubmitted && !shipAddress}">
               <label>納品先住所</label>
               <input type="text" [(ngModel)]="shipAddress">
             </div>
-            <div class="form-group">
+            <div class="form-group" [ngClass]="{'has-error': isSubmitted && !invoiceAddress}">
               <label>請求先住所</label>
               <input type="text" [(ngModel)]="invoiceAddress">
             </div>
-            <div class="form-group">
+            <div class="form-group" [ngClass]="{'has-error': isSubmitted && !payBy}">
               <label>支払方法</label>
               <input type="text" [(ngModel)]="payBy">
             </div>
@@ -217,7 +228,7 @@
 </div>
 
 
- <!--固定表示ボタン-->
+<!--固定表示ボタン-->
 <div class="toBottom" (click)="toButtom()" [ngClass]="{'show': showButton, 'hidden': !showButton}">
   @if(isAtBottom()){
   <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="arrow_upward_alt" class="arrow"></mat-icon>
