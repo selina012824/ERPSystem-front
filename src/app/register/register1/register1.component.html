@@ -1,0 +1,33 @@
+<div class="background">
+    <div class="container">
+        <div class="login-container">
+            <div class="login-form-wrapper">
+                <h2 class="title">アカウント登録</h2>
+                <h3 class="subtitle">➀メールアドレスを入力してください</h3>
+                <div class="login-form">
+                    <div class="form-group">
+                        <input class="input-field" type="text" maxlength="100" placeholder="メールアドレス"
+                            [(ngModel)]="email">
+                        @if(alertMessage){
+                        <div class="error-message">
+                            メールアドレスを入力してください。
+                        </div>
+                        }
+                        @if(alertMessage1){
+                        <div class="error-message">
+                            メールアドレスを入力してください。
+                        </div>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <button class="submit-button" (click)="next()">次へ</button>
+                        <div class="register-link">
+                            <a routerLink="/" routerLinkActive="active" (click)="return()">すでにアカウントをお持ちですか？ログインに戻る</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

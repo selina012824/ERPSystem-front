@@ -1,0 +1,167 @@
+.background {
+    position: absolute;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('https://i.ibb.co/KxK1f6qq/1e35e58e-d021-449d-b617-b710bce0d367.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 400px;
+    min-height: 290px;
+    /* 設定最大寬度 */
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.login-form-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 10px;
+
+}
+
+.subtitle {
+    color: #0755c2;
+    margin-right: 120px;
+    white-space: nowrap;
+}
+
+.login-form {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.input-field {
+    width: 90%;
+    padding: 12px 16px;
+    font-size: 18px;
+    border: 1px solid #d3d6dc;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.input-field:focus {
+    border-color: #4981cf;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.submit-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #86aede;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #4981cf;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.submit-button:focus {
+    outline: none;
+}
+
+.submit-button:active {
+    background-color: #3d7fbc;
+}
+
+.submit-button2 {
+    width: 100%;
+    padding: 12px;
+    margin-top: 16px;
+    color: #86aede;
+    font-weight: bold;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.submit-button2:hover {
+    color: #4981cf;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.submit-button2:focus {
+    outline: none;
+}
+
+.register-link {
+    text-align: right;
+    margin-top: 20px;
+    padding-right: 5px;
+}
+
+.register-link a {
+    font-size: 14px;
+    color: #4981cf;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    cursor: pointer;
+
+}
+
+.register-link a:hover {
+    color: #3d7fbc;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.error-message {
+    color: red;
+    margin-top: 5px;
+}
+
+
+.message {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #4981cf;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border: 1px solid #4981cf;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    z-index: 1000;
+}

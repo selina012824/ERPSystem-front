@@ -72,7 +72,7 @@ export class EditReceivingComponent {
         }
 
         for (let item of this.receivingData) {
-          item.updatedBy = "員工C";
+          item.updatedBy = this.dataService.employeeID;
           item.updatedAt = formattedDateTime;
           item.receivingInfoList = infoData;
         }

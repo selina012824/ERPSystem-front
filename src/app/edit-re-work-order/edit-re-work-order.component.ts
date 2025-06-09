@@ -87,7 +87,7 @@ export class EditReWorkOrderComponent {
 
 
         for (let item of this.reWorkOrderData) {
-          item.updatedBy = "員工C";
+          item.updatedBy = this.dataService.employeeID;
           item.updatedAt = formattedDateTime;
         }
 

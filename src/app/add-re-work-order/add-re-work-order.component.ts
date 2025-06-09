@@ -58,7 +58,7 @@ export class AddReWorkOrderComponent {
         let formattedDateTime = datePipe.transform(now, 'yyyy-MM-ddTHH:mm:ss')!;
 
         this.createAt = formattedDateTime;
-        this.createClerk = "員工A"//這邊到時會用註冊名字去寫
+        this.createClerk = this.dataService.employeeID//這邊到時會用註冊名字去寫
 
         let orderDetailID = [];
         for (let item of this.infos) {

@@ -102,12 +102,12 @@ export class EditQuotationComponent {
             "createAt": this.quotationData[0].createAt,
             "createClerkNm": this.quotationData[0].createClerkNm,
             "updateAt": formattedDateTime,
-            "updateBy": "員工C",// 今後はログインユーザー名に置換予定
+            "updateBy":this.dataService.employeeID,
           })
         }
 
         for (let item of this.quotationData) {
-          item.updateBy = "員工C";
+          item.updateBy = this.dataService.employeeID;
           item.updateAt = formattedDateTime;
           item.quotationInfoList = infoData;
           item.subtotal = this.subTotal;

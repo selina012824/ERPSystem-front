@@ -1,0 +1,44 @@
+<div class="background">
+    @if(errorMessage){
+    <div class="message">
+        {{ errorMessage}}
+    </div>
+    }
+    <div class="container">
+        <div class="login-container">
+            <div class="login-form-wrapper">
+                <h2 class="title">アカウント登録</h2>
+                <h3 class="subtitle">➂パスワードを設定してください</h3>
+                <div class="login-form">
+                    <div class="form-group">
+                        <input class="input-field" type="password" maxlength="20" placeholder="パスワード"
+                            [(ngModel)]="password">
+                        @if(alertMessage){
+                        <div class="error-message">
+                            パスワードを入力してください
+                        </div>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <input class="input-field" type="password" maxlength="20" placeholder="もう一度入力してください"
+                            [(ngModel)]="password2">
+                        @if(passwordAlert){
+                        <div class="error-message">
+                            入力されたパスワードが一致しません。
+                        </div>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <button class="submit-button" (click)="register()">確認</button>
+                        <button class="submit-button2" (click)="return()">戻る</button>
+                        <div class="register-link">
+                            <a routerLink="/" routerLinkActive="active">すでにアカウントをお持ちですか？ログインに戻る</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

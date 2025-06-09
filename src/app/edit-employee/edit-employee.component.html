@@ -1,0 +1,66 @@
+<!-- TODO: 登録失敗時の警告メッセージを表示-->
+<div class="whole">
+    @for (item of employeeData; track $index) {
+    <div class="content">
+        <div class="quotation-container">
+
+            <!-- 返回與標題 -->
+            <div style="display:flex; align-items: center;">
+                <mat-icon fontIcon="arrow_back" class="return-icon" (click)="return()"></mat-icon>
+                <h2>従業員の編集</h2>
+            </div>
+
+            <div>
+                <!-- 基本情報 -->
+                <section class="section">
+                    <h3>基本情報</h3>
+                    <div class="form-grid  three-columns">
+                        <div class="form-group">
+                            <label>従業員番号</label>
+                            <input type="text" [(ngModel)]="item.employeeID" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>従業員名</label>
+                            <input type="text" [(ngModel)]="item.employeeName">
+                        </div>
+                        <div class="form-group">
+                            <label>誕生日</label>
+                            <input type="date" [(ngModel)]="item.birthday" disabled>
+                        </div>
+                    </div>
+                    <div class="form-grid three-columns" style="margin-top: 10px;">
+                        <div class="form-group">
+                            <label>携帯番号</label>
+                            <input type="text" [(ngModel)]="item.cellphone">
+                        </div>
+                        <div class="form-group">
+                            <label>メールアドレス</label>
+                            <input type="text" [(ngModel)]="item.email">
+                        </div>
+                        <div class="form-group">
+                            <label>住所</label>
+                            <input type="text" [(ngModel)]="item.address">
+                        </div>
+                    </div>
+                </section>
+
+                <hr style="margin: 40px 0; border: none; border-top: 2px dashed #ccc;">
+                <div class="actions">
+                    <button type="button" (click)="return()">戻る</button>
+                    <button type="submit" (click)="send()">保存する</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+
+<!--固定按鈕-->
+
+<div class="toBottom" (click)="toButtom()" [ngClass]="{'show': showButton, 'hidden': !showButton}">
+    @if(isAtBottom()){
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="arrow_upward_alt" class="arrow"></mat-icon>
+    }@else {
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="arrow_downward_alt" class="arrow"></mat-icon>
+    }
+</div>

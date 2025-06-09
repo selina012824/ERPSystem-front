@@ -1,7 +1,5 @@
 <div class="whole">
 
-
-
   @for (item of receivingData; track $index) {
 
   <div class="content">
@@ -10,13 +8,6 @@
         <mat-icon fontIcon="arrow_back" class="return-icon" (click)="return()"></mat-icon>
         <h2>入荷伝票の詳細</h2>
         <mat-icon fontIcon="print" class="print-icon" title="印刷" (click)="print()"></mat-icon>
-      </div>
-
-      <div class="meta-info">
-        <span>作成者: {{item.createdBy}}</span>
-        <span>作成日: {{item.createdAt | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
-        <span>更新者: {{item.updatedBy}}</span>
-        <span>更新日: {{item.updatedAt | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
       </div>
 
       <div class="two-columns">

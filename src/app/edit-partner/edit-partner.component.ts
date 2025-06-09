@@ -75,7 +75,7 @@ export class EditPartnerComponent {
         let formattedDateTime = datePipe.transform(now, 'yyyy-MM-ddTHH:mm:ss')!;
 
         for (let item of this.partnerData) {
-          item.updatedBy = "員工C";
+          item.updatedBy = this.dataService.employeeID;
           item.updatedAt = formattedDateTime;
           item.partnerType = JSON.stringify(this.partnerType);
         }
@@ -83,13 +83,11 @@ export class EditPartnerComponent {
         let req = this.partnerData[0];
 
         this.http.postApi("http://localhost:8080/partner/edit_partner", req)
-          .subscribe((res: any) => {
-            console.log(res);
+          .subscribe({
 
-            if (res.code == 200) {
+            next: (res: any) => {
               // 將成功訊息存儲到 sessionStorage 中
               sessionStorage.setItem('successMessage', 'データが正常に送信されました!');
-
               this.router.navigateByUrl('/TransformPage/partnerPage');
             }
           })

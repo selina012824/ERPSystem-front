@@ -1,0 +1,93 @@
+<div class="whole">
+
+    @if(successMessage){
+    <div class="success-message">
+        {{ successMessage }}
+    </div>
+    }
+
+    <div class="content">
+        <div class="topSolid1">
+            <h1 class="title">従業員一覧</h1>
+        </div>
+
+        <div class="search-container">
+            <div class="search-row">
+                <div class="search-field">
+                    <label for="employeeID">従業員番号:</label>
+                    <input type="text" id="employeeID" class="search-input" placeholder="従業員番号を入力"
+                        [(ngModel)]="employeeID">
+                </div>
+
+                <div class="search-field">
+                    <label for="employeeName">従業員名前:</label>
+                    <input type="text" id="employeeName" class="search-input" placeholder="業員名前を入力"
+                        [(ngModel)]="employeeName">
+                </div>
+            </div>
+
+            <div class="search-row">
+                <div class="search-field">
+                    <label for="cellphone">携帯番号:</label>
+                    <input type="text" id="cellphone" class="search-input" [(ngModel)]="cellphone"
+                        placeholder="携帯番号を入力">
+                </div>
+
+                <div class="search-field">
+                    <label for="email">メールアドレス:</label>
+                    <input type="text" id="email" class="search-input" [(ngModel)]="email"
+                        placeholder="メールアドレスを入力">
+                </div>
+                <div class="search-row">
+                    <button class="search-button clear" (click)="initializeSearchData()">クリア</button>
+                    <button class="search-button" (click)="search()">検索</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="topSolid2">
+            <h1 class="subTitle">全 <span style="font-size:30px">{{index}}</span> 件 </h1>
+            <div class="top-actions">
+                <mat-icon fontIcon="restart_alt" title="データリセット" class="reset-icon" (click)="reset()"></mat-icon>
+                <button class="addButton" routerLink="/TransformPage/addEmployeePage" routerLinkActive="active">
+                    + 新規従業員
+                </button>
+            </div>
+        </div>
+
+        <div>
+            <table>
+                <thead>
+                    <tr class="tableTitleA">
+                        <th class="tableTitle">従業員番号</th>
+                        <th class="tableTitle">従業員名前</th>
+                        <th class="tableTitle">誕生日</th>
+                        <th class="tableTitle">携帯番号</th>
+                        <th class="tableTitle">メールアドレス</th>
+                        <th class="tableTitle">編集</th>
+                    </tr>
+                </thead>
+                @for (item of paginatedData; track $index) {
+                <tr class="round-row" (click)="toInfo(item.employeeID)">
+                    <td class="tableContent">{{item.employeeID}}</td>
+                    <td class="tableContent">{{item.employeeName}}</td>
+                    <td class="tableContent">{{item.birthday}}</td>
+                    <td class="tableContent">{{item.cellphone}}</td>
+                    <td class="tableContent">{{item.email}}</td>
+                    <td class="tableContent"><mat-icon aria-hidden="false" aria-label="Example home icon"
+                            fontIcon="edit_square" class="icon" (click)="edit(item.employeeID,$event)"></mat-icon></td>
+                </tr>
+
+                }
+
+            </table>
+            <!-- 分頁控制 -->
+            <div class="pagination">
+                <button (click)="onPageChange(pageIndex - 1)" [disabled]="pageIndex === 0">前へ</button>
+                <span> ページ{{pageIndex + 1}} </span>
+                <button (click)="onPageChange(pageIndex + 1)" [disabled]="pageIndex >= totalPages - 1">次へ</button>
+            </div>
+
+        </div>
+    </div>
+</div>

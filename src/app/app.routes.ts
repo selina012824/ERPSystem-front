@@ -29,6 +29,13 @@ import { PartnerComponent } from './partner/partner.component';
 import { PartnerInfoComponent } from './partner-info/partner-info.component';
 import { AddPartnerComponent } from './add-partner/add-partner.component';
 import { EditPartnerComponent } from './edit-partner/edit-partner.component';
+import { EmployeeComponent } from './employee/employee.component';
+import { AddEmployeeComponent } from './add-employee/add-employee.component';
+import { EmployeeInfoComponent } from './employee-info/employee-info.component';
+import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
+import { Register1Component } from './register/register1/register1.component';
+import { Register2Component } from './register/register2/register2.component';
+import { Register3Component } from './register/register3/register3.component';
 
 export const routes: Routes = [
   {
@@ -68,7 +75,15 @@ export const routes: Routes = [
       { path: "partnerPage", component: PartnerComponent },
       { path: "partnerInfoPage", component: PartnerInfoComponent },
       { path: "addPartnerPage", component: AddPartnerComponent },
-      { path: "editPartnerPage", component: EditPartnerComponent }
+      { path: "editPartnerPage", component: EditPartnerComponent },
+
+      { path: "employeePage", component: EmployeeComponent },
+      { path: "employeeInfoPage", component: EmployeeInfoComponent },
+      { path: "addEmployeePage", component: AddEmployeeComponent },
+      { path: "editEmployeePage", component: EditEmployeeComponent },
     ]
-  }
+  },
+  { path: "register1Page", component: Register1Component },
+  { path: "register2Page", component: Register2Component },
+  { path: "register3Page", component: Register3Component },
 ];

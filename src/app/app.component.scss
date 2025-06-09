@@ -1,13 +1,27 @@
 /* 登入頁面 */
-.login-container {
+.background {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('https://i.ibb.co/KxK1f6qq/1e35e58e-d021-449d-b617-b710bce0d367.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
   background-color: #ffffff;
   width: 100%;
-  max-width: 400px; /* 設定最大寬度 */
-
+  max-width: 400px;
+  /* 設定最大寬度 */
   padding: 20px;
   border-radius: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -77,3 +91,40 @@
   background-color: #3d7fbc;
 }
 
+.register-link {
+  text-align: right;
+  margin-top: 10px;
+  padding-right: 5px;
+}
+
+.register-link a {
+  font-size: 14px;
+  color: #4981cf;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+.register-link a:hover {
+  color: #3d7fbc;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.success-message {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #4981cf;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  border: 1px solid #4981cf;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+  z-index: 10000;
+}

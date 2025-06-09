@@ -164,7 +164,7 @@ export class AddQuotationComponent {
         let formattedDateTime = datePipe.transform(now, 'yyyy-MM-ddTHH:mm:ss')!;
 
         this.createAt = formattedDateTime;
-        this.createClerk = "員工A" // 今後はログインユーザー名に置換予定
+        this.createClerk = this.dataService.employeeID // 今後はログインユーザー名に置換予定
 
 
         for (let item of this.infos) {

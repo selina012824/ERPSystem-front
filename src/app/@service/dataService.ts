@@ -37,4 +37,9 @@ export class DataService {
   setReceivingID!: string | null;
   setReWorkOrders!:string[];
 
+  // 登録用
+  email!:string;
+  name!:string;
+  birthday!:string;
+  employeeID!:string;
 }

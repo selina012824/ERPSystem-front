@@ -97,12 +97,12 @@ export class EditPOComponent {
             "createAt": this.poData[0].createAt,
             "createClerkNm": this.poData[0].createBy,
             "updateAt": formattedDateTime,
-            "updateBy": "員工C",
+            "updateBy": this.dataService.employeeID,
           })
         }
 
         for (let item of this.poData) {
-          item.updateBy = "員工C";
+          item.updateBy = this.dataService.employeeID;
           item.updateAt = formattedDateTime;
           item.poInfoList = infoData;
           item.subtotal = this.subTotal;

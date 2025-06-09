@@ -17,6 +17,8 @@
 
       <hr style="border: none; border-top: 1px solid #ffffff50; margin: 20px 0;">
       <li class="liText-hide" routerLink="/TransformPage/partnerPage" routerLinkActive="active">取引先</li>
+      <li class="liText-hide" routerLink="/TransformPage/employeePage" routerLinkActive="active"
+        style="font-weight:bold;">従業員</li>
     </ul>
   </div>
 
@@ -28,6 +30,8 @@
   <div>
     <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="menu" class="menuIcon"
       (click)="toggleSideArea()" style="margin-left: 20px;"></mat-icon>
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="logout" class="menuIcon"
+      (click)="logout()" style="margin-left: 100px;"></mat-icon>
     <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="account_circle" class="icon"></mat-icon>
   </div>
   <div class="allModal">
@@ -40,6 +44,8 @@
       <li class="liText" routerLink="/TransformPage/reWorkOrderPage" routerLinkActive="active">再作業指示書</li>
       <hr style="border: none; border-top: 1px solid #ffffff50; margin: 20px 0;">
       <li class="liText" routerLink="/TransformPage/partnerPage" routerLinkActive="active">取引先</li>
+      <li class="liText" routerLink="/TransformPage/employeePage" routerLinkActive="active" style="font-weight:bold;">
+        従業員</li>
     </ul>
   </div>
 </div>

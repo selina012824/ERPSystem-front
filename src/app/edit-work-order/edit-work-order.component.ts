@@ -66,7 +66,7 @@ export class EditWorkOrderComponent {
 
 
         for (let item of this.workOrderData) {
-          item.updatedBy = "員工C";
+          item.updatedBy = this.dataService.employeeID;
           item.updatedAt = formattedDateTime;
         }
 

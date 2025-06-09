@@ -74,7 +74,7 @@ export class AddPartnerComponent {
         let formattedDateTime = datePipe.transform(now, 'yyyy-MM-ddTHH:mm:ss')!;
 
         this.createAt = formattedDateTime;
-        this.createBy = "員工A"//這邊到時會用註冊名字去寫
+        this.createBy = this.dataService.employeeID
 
         let req = {
           "partnerID": this.partnerID,

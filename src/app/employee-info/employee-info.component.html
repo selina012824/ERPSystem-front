@@ -1,0 +1,64 @@
+<div class="whole">
+    @for (item of employeeData; track $index) {
+    <div class="content">
+        <div class="quotation-detail-container">
+            <!-- 標題列 -->
+            <div class="header">
+                <mat-icon fontIcon="arrow_back" class="return-icon" (click)="return()"></mat-icon>
+                <h2>従業員の詳細</h2>
+            </div>
+
+
+            <!-- 基本情報 -->
+            <section class="section">
+                <h3>基本情報</h3>
+                <div class="info-grid">
+                    <div>
+                        <label>従業員番号</label>
+                        <div>{{ item.employeeID }}</div>
+                    </div>
+                    <div>
+                        <label>従業員名</label>
+                        <div>{{ item.employeeName }}</div>
+                    </div>
+                    <div>
+                        <label>誕生日</label>
+                        <div>{{ item.birthday }}</div>
+                    </div>
+                </div>
+
+                <div class="info-grid" style="margin-top: 10px;">
+                    <div>
+                        <label>携帯番号</label>
+                        <div>{{ item.cellphone }}</div>
+                    </div>
+                    <div>
+                        <label>メールアドレス</label>
+                        <div>{{ item.email }}</div>
+                    </div>
+                    <div>
+                        <label>住所</label>
+                        <div>{{ item.address }}</div>
+                    </div>
+                </div>
+            </section>
+
+
+
+            <!-- 返回按鈕 -->
+            <div class="actions">
+                <button class="button" (click)="return()">戻る</button>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+
+<!-- 固定按鈕 -->
+<div class="toBottom" (click)="toButtom()" [ngClass]="{'show': showButton, 'hidden': !showButton}">
+    @if(isAtBottom()){
+    <mat-icon fontIcon="arrow_upward_alt" class="arrow"></mat-icon>
+    } @else {
+    <mat-icon fontIcon="arrow_downward_alt" class="arrow"></mat-icon>
+    }
+</div>

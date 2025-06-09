@@ -111,12 +111,12 @@ export class EditOrderComponent {
             "createAt": this.orderData[0].createAt,
             "createClerkNm": this.orderData[0].createBy,
             "updateAt": formattedDateTime,
-            "updateBy": "員工C",
+            "updateBy": this.dataService.employeeID,
           })
         }
 
         for (let item of this.orderData) {
-          item.updateBy = "員工C";
+          item.updateBy = this.dataService.employeeID;
           item.updateAt = formattedDateTime;
           item.orderInfoList = infoData;
           item.subtotal = this.subTotal;
