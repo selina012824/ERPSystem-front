@@ -144,6 +144,7 @@ export class AddQuotationComponent {
     })
   }
 
+
   isSubmitted = false;
   formatError = false;
   notFound = false;
@@ -235,7 +236,7 @@ export class AddQuotationComponent {
               this.router.navigateByUrl('/TransformPage/quotationPage');
             },
 
-            error: (err:any) => {
+            error: (err: any) => {
               console.log(err);
               this.isSubmitted = true;
 
@@ -244,17 +245,17 @@ export class AddQuotationComponent {
                 this.formatError = true;
               }
 
-              for(let item of err.error){
-                if(item.message == "指定された取引先が見つかりません。"){
-                 this.isSubmitted = true;
-                 this.notFound = true;
+              for (let item of err.error) {
+                if (item.message == "指定された取引先が見つかりません。") {
+                  this.isSubmitted = true;
+                  this.notFound = true;
                 }
-                if(item.message == "指定され見積番号が無効です。"){
+                if (item.message == "指定され見積番号が無効です。") {
                   this.formatError = true;
                 }
-             }
+              }
 
-              
+
             }
 
           })

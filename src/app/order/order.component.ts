@@ -225,12 +225,15 @@ export class OrderComponent {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result == "sure") {
-
+          this.http.postApi("http://localhost:8080/order/restore_order", targetID).subscribe({
+            next: (res: any) => {
+              console.log(res);
+              window.location.reload();
+            }
+          })
         }
       })
     }
-
-
   }
 
 

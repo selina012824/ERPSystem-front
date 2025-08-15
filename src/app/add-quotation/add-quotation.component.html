@@ -15,7 +15,7 @@
             <div class="form-group input-with-error"
               [ngClass]="{'has-error': (isSubmitted && !quotationID) || (formatError && !quotationID?.match('^[A-Za-z0-9]+$'))}">
               <label>見積番号</label>
-              <input type="text" [(ngModel)]="quotationID">
+              <input type="text" [(ngModel)]="quotationID" >
               <div class="error-inside"
                 *ngIf="isSubmitted && (formatError &&quotationID&& !quotationID?.match('^[A-Za-z0-9]+$'))">
                 ※ 英数字のみ入力してください。
@@ -75,13 +75,13 @@
             </div>
             <div class="form-group" [ngClass]="{'has-error': isSubmitted && !cellPhone}">
               <label>携帯番号</label>
-              <input type="text" [(ngModel)]="cellPhone">
+              <input type="number" [(ngModel)]="cellPhone" class="no-spinner">
             </div>
-            <div class="form-group" >
+            <div class="form-group">
               <label>FAX番号</label>
               <input type="text" [(ngModel)]="faxNumber" disabled>
             </div>
-            <div class="form-group" >
+            <div class="form-group">
               <label>法人番号</label>
               <input type="text" [(ngModel)]="taxNumber" disabled>
             </div>
